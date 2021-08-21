@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use Carbon\Carbon;
+use Firebase\JWT\JWT;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Gate;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -25,6 +29,27 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Auth::viaRequest('jwt', function (Request $request) {
+
+            $jwt = $request->header('jwt');
+
+            // Check if token is present
+            if (!$jwt) return null;
+
+            // Decode the token 
+            $secret = env('JWT_SECRET');
+            $token = JWT::decode($jwt, $secret, array('HS256'));
+
+            // Check if token is valid
+            $issuead_at = Carbon::createFromTimestampUTC($token->iat);
+            if ($issuead_at->addDay()->lessThan(Carbon::now())) {
+                return null;
+            }
+
+            // TODO: Check if token is present on blacklist
+
+            // Retrieve and return the correct user 
+            return User::where('email', $token->user)->first();
+        });
     }
 }

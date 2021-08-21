@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterController;
+use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,8 +19,7 @@ use Illuminate\Support\Facades\Route;
 // PUBLIC ROUTES
 Route::post('/register', [RegisterController::class, 'store']);
 
-
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+// PROTECTED ROUTES 
+Route::get('/yea', function () {
+    return 'This route is protected';
+})->middleware('auth');
