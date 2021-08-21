@@ -26,7 +26,7 @@ class RegisterController extends Controller
             'timezone' => 'max:255'
         ]);
 
-        // STORE USER IN DATABASE
+        // ADD USER TO DATABASE
         User::create([
             'name' => $request->name,
             'email' => $request->email,
