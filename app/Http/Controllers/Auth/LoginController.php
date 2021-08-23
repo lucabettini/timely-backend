@@ -7,10 +7,8 @@ use App\Models\User;
 use DateTime;
 use Firebase\JWT\JWT;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-use function App\Http\Controllers\Auth\utils\sendToken;
 
 class LoginController extends Controller
 {
