@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use DateTime;
-use Firebase\JWT\JWT;
+use App\Modules\Users\Services\CreateUserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
+
+    private CreateUserService $service;
+
     public function store(Request $request)
     {
         // VALIDATION
@@ -23,26 +25,17 @@ class RegisterController extends Controller
                 'confirmed',
                 Password::min(8)->letters()->numbers()
             ],
-            'timezone' => 'max:255'
+            // 'timezone' => 'max:255'
         ]);
 
-        // ADD USER TO DATABASE
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            // 'timezone' => $request->timezone
-        ]);
-
-        // CREATE JWT TOKEN 
-        $secret = env('JWT_SECRET');
-        $now = new DateTime();
-        $payload = array(
-            "iat" => $now->getTimestamp(),
-            "user" => $request->email
+        // CREATE NEW USER AND JWT
+        $jwt = $this->service->create(
+            $request->name,
+            $request->email,
+            $request->password
         );
-        $jwt = JWT::encode($payload, $secret);
 
+        // RESPONSE 
         return response([
             "status" => "success"
         ])->header('jwt', $jwt);

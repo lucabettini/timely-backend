@@ -3,15 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
-use DateTime;
-use Firebase\JWT\JWT;
+use App\Modules\Users\Repositories\UserRepository;
+use App\Modules\Users\Services\TokenService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 
 class LoginController extends Controller
 {
+
+    private UserRepository $repository;
+    private TokenService $service;
+
+
     public function store(Request $request)
     {
         // VALIDATION
@@ -21,7 +24,7 @@ class LoginController extends Controller
         ]);
 
         // GET USER
-        $user = User::where('email', $request->email)->first();
+        $user = $this->repository->getUserByEmail($request->email);
         if (!$user) {
             return response([
                 "message" => "user not found"
@@ -29,20 +32,14 @@ class LoginController extends Controller
         }
 
         // CHECK PASSWORD
-        if (!Hash::check($request->password, $user->password)) {
+        if (!$this->repository->isSamePassword($request->password, $user->password)) {
             return response([
                 "message" => "invalid credentials"
             ], 400);
         }
 
-        // Create JWT
-        $secret = env('JWT_SECRET');
-        $now = new DateTime();
-        $payload = array(
-            "iat" => $now->getTimestamp(),
-            "user" => $request->email
-        );
-        $jwt = JWT::encode($payload, $secret);
+        // CREATE JWT
+        $jwt = $this->service->create($request->email);
 
         // Attach to header and return success message
         return response([
