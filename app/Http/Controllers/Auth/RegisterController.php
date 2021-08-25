@@ -3,16 +3,19 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use App\Modules\Users\Services\CreateUserService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
 
-    private CreateUserService $service;
+    private $service;
+
+    public function __construct(CreateUserService $service)
+    {
+        $this->service = $service;
+    }
 
     public function store(Request $request)
     {

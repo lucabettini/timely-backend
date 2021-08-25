@@ -8,7 +8,12 @@ use Firebase\JWT\JWT;
 class TokenService
 {
 
-    private $secret = env('JWT_SECRET');
+    private $secret;
+
+    public function __construct()
+    {
+        $this->secret = env('JWT_SECRET');
+    }
 
     private function getDate()
     {

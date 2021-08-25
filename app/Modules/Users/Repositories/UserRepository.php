@@ -12,18 +12,18 @@ class UserRepository
         return User::where('email', $email)->first();
     }
 
-    public function createUser($name, $email, $hashedPassword)
+    public function createUser($name, $email, $hashed_password)
     {
         User::create([
             'name' => $name,
             'email' => $email,
-            'password' => $hashedPassword,
+            'password' => $hashed_password,
             // 'timezone' => $request->timezone
         ]);
     }
 
-    public function isSamePassword($password, $hashedPassword)
+    public function isSamePassword($password, $hashed_password)
     {
-        return Hash::check($password, $hashedPassword);
+        return Hash::check($password, $hashed_password);
     }
 }

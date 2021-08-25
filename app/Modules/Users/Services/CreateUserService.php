@@ -7,9 +7,15 @@ use Illuminate\Support\Facades\Hash;
 
 class CreateUserService
 {
-    private UserRepository $repository;
+    private $repository;
 
-    private TokenService $service;
+    private $service;
+
+    public function __construct(UserRepository $repository, TokenService $token_service)
+    {
+        $this->repository = $repository;
+        $this->service = $token_service;
+    }
 
     public function create($name, $email, $password)
     {
