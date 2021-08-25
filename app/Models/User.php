@@ -30,12 +30,12 @@ class User extends Authenticatable
     // RELATIONSHIPS // 
     //---------------//
 
-    public function task()
+    public function tasks()
     {
         return $this->hasMany(Task::class);
     }
 
-    public function timeUnit()
+    public function timeUnits()
     {
         return $this->hasManyThrough(TimeUnit::class, Task::class);
     }

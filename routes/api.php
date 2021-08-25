@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Tasks\TaskController;
 use App\Http\Controllers\Users\LoginController;
 use App\Http\Controllers\Users\RegisterController;
 use Illuminate\Http\Request;
@@ -25,3 +26,6 @@ Route::get('/yea', function (Request $request) {
 
     return $request->user()->name;
 })->middleware('auth');
+
+Route::get('/tasks', [TaskController::class, 'getAll'])->middleware('auth');
+Route::post('/tasks', [TaskController::class, 'store'])->middleware('auth');

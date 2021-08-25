@@ -25,9 +25,10 @@ class Task extends Model
     ];
 
     // Default attribute values 
-    protected $attribute = [
+    protected $attributes = [
         'completed' => false,
-        'color' => '000000'
+        'color' => '000000',
+        'description' => null
     ];
 
     // Convert 1 and 0 into true and false
