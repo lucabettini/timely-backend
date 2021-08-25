@@ -3,27 +3,27 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\LoginRequest;
 use App\Modules\Users\Repositories\UserRepository;
 use App\Modules\Users\Services\TokenService;
-use Illuminate\Http\Request;
 
 
 class LoginController extends Controller
 {
 
-    private UserRepository $repository;
-    private TokenService $service;
+    private $repository;
+    private $service;
 
-
-    public function store(Request $request)
+    public function __construct(UserRepository $repository, TokenService $token_service)
     {
-        // VALIDATION
-        $this->validate($request, [
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+        $this->repository = $repository;
+        $this->service = $token_service;
+    }
 
-        // GET USER
+
+    public function store(LoginRequest $request)
+    {
+        // Get user from DB 
         $user = $this->repository->getUserByEmail($request->email);
         if (!$user) {
             return response([
@@ -31,17 +31,15 @@ class LoginController extends Controller
             ], 400);
         }
 
-        // CHECK PASSWORD
+        // Check password 
         if (!$this->repository->isSamePassword($request->password, $user->password)) {
             return response([
                 "message" => "invalid credentials"
             ], 400);
         }
 
-        // CREATE JWT
+        // Create JWT, attach to header and return response
         $jwt = $this->service->create($request->email);
-
-        // Attach to header and return success message
         return response([
             "status" => "success"
         ])->header('jwt', $jwt);

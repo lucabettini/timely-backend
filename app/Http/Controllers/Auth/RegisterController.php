@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\RegisterRequest;
 use App\Modules\Users\Services\CreateUserService;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rules\Password;
 
 class RegisterController extends Controller
 {
@@ -17,28 +16,16 @@ class RegisterController extends Controller
         $this->service = $service;
     }
 
-    public function store(Request $request)
+    public function store(RegisterRequest $request)
     {
-        // VALIDATION
-        $this->validate($request, [
-            'name' => 'required|max:255|unique:users',
-            'email' => 'required|max:255|email|unique:users',
-            'password' => [
-                'required',
-                'confirmed',
-                Password::min(8)->letters()->numbers()
-            ],
-            // 'timezone' => 'max:255'
-        ]);
-
-        // CREATE NEW USER AND JWT
+        // Create a new user and JWT
         $jwt = $this->service->create(
             $request->name,
             $request->email,
             $request->password
         );
 
-        // RESPONSE 
+        // Return response 
         return response([
             "status" => "success"
         ])->header('jwt', $jwt);
