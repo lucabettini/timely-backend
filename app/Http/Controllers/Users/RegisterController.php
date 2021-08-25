@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\Users\RegisterRequest;
 use App\Modules\Users\Services\CreateUserService;
 
 class RegisterController extends Controller
 {
-
     private $service;
 
     public function __construct(CreateUserService $service)

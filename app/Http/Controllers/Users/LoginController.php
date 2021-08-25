@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\Users;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginRequest;
+use App\Http\Requests\Users\LoginRequest;
 use App\Modules\Users\Repositories\UserRepository;
 use App\Modules\Users\Services\TokenService;
 
-
 class LoginController extends Controller
 {
-
     private $repository;
     private $service;
 
