@@ -7,9 +7,9 @@ use App\Models\User;
 
 class TaskRepository
 {
-    public function getTaskById($id)
+    public function getTaskById($id, User $user)
     {
-        return Task::find($id);
+        return $user->tasks->find($id);
     }
 
     public function getAllTasks(User $user)

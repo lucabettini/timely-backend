@@ -21,11 +21,6 @@ class RecurringTask extends Model
         'end_date'
     ];
 
-    // Default attribute values 
-    protected $attribute = [
-        'interval' => 1
-    ];
-
     //---------------//
     // RELATIONSHIPS // 
     //---------------//

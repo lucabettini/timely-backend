@@ -28,6 +28,7 @@ class TaskRequest extends FormRequest
         return [
             'name' => [
                 'required',
+                'string',
                 'max:255',
                 Rule::unique('tasks')->where(function ($query) {
                     return $query->where('user_id', Auth::user()->id);
@@ -35,6 +36,7 @@ class TaskRequest extends FormRequest
             ],
             'bucket' => [
                 'required',
+                'string',
                 'max:255',
                 Rule::unique('tasks')->where(function ($query) {
                     return $query->where('user_id', Auth::user()->id);
@@ -42,6 +44,7 @@ class TaskRequest extends FormRequest
             ],
             'area' => [
                 'required',
+                'string',
                 'max:255',
                 Rule::unique('tasks')->where(function ($query) {
                     return $query->where('user_id', Auth::user()->id);

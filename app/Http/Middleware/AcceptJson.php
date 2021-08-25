@@ -16,7 +16,7 @@ class AcceptJson
      */
     public function handle(Request $request, Closure $next)
     {
-        // Lumen will automatically convert the response to JSON
+        // Laravel will automatically convert the response to JSON
         // if the request has this header.
 
         $request->headers->set('Accept', 'application/json');

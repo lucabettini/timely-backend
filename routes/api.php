@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Tasks\RecurringTaskController;
 use App\Http\Controllers\Tasks\TaskController;
 use App\Http\Controllers\Users\LoginController;
 use App\Http\Controllers\Users\RegisterController;
@@ -22,10 +23,10 @@ Route::post('/register', [RegisterController::class, 'store']);
 Route::post('/login', [LoginController::class, 'store']);
 
 // PROTECTED ROUTES 
-Route::get('/yea', function (Request $request) {
+Route::middleware(['auth'])->group(function () {
+    Route::get('/tasks', [TaskController::class, 'getAll']);
+    Route::post('/tasks', [TaskController::class, 'store']);
 
-    return $request->user()->name;
-})->middleware('auth');
-
-Route::get('/tasks', [TaskController::class, 'getAll'])->middleware('auth');
-Route::post('/tasks', [TaskController::class, 'store'])->middleware('auth');
+    Route::post('/tasks/{id}/recurring', [RecurringTaskController::class, 'store']);
+    Route::put('/tasks/{id}/recurring', [RecurringTaskController::class, 'update']);
+});

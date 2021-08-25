@@ -59,8 +59,8 @@ class Task extends Model
         return $this->hasMany(TimeUnit::class);
     }
 
-    public function recurringTask()
+    public function recurring()
     {
-        return $this->hasOne(Task::class);
+        return $this->hasOne(RecurringTask::class);
     }
 }
