@@ -25,6 +25,7 @@ Route::post('/login', [LoginController::class, 'store']);
 // PROTECTED ROUTES 
 Route::middleware(['auth'])->group(function () {
     Route::get('/tasks', [TaskController::class, 'getAll']);
+    Route::get('/tasks/{id}', [TaskController::class, 'getById']);
     Route::post('/tasks', [TaskController::class, 'store']);
 
     Route::post('/tasks/{id}/recurring', [RecurringTaskController::class, 'store']);

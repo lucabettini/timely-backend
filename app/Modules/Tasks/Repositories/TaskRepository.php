@@ -2,14 +2,13 @@
 
 namespace App\Modules\Tasks\Repositories;
 
-use App\Models\Task;
 use App\Models\User;
 
 class TaskRepository
 {
     public function getTaskById($id, User $user)
     {
-        return $user->tasks->find($id);
+        return $user->tasks()->find($id);
     }
 
     public function getAllTasks(User $user)
