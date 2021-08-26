@@ -26,7 +26,9 @@ Route::post('/login', [LoginController::class, 'store']);
 Route::middleware(['auth'])->group(function () {
     Route::get('/tasks', [TaskController::class, 'getAll']);
     Route::get('/tasks/{id}', [TaskController::class, 'getById']);
+
     Route::post('/tasks', [TaskController::class, 'store']);
+    Route::put('/tasks/{id}', [TaskController::class, 'update']);
 
     Route::post('/tasks/{id}/recurring', [RecurringTaskController::class, 'store']);
     Route::put('/tasks/{id}/recurring', [RecurringTaskController::class, 'update']);

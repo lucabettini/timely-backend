@@ -27,7 +27,7 @@ class TaskController extends Controller
     {
         $task = $this->repository->getTaskById($id, $request->user());
 
-        return response([$task]);
+        return response($task);
     }
 
     public function store(TaskRequest $request)
@@ -35,6 +35,13 @@ class TaskController extends Controller
 
         $task = $this->repository->createTask($request->all(), $request->user());
 
-        return response([$task]);
+        return response($task);
+    }
+
+    public function update(TaskRequest $request, $id)
+    {
+        $task = $this->repository->updateTask($request->all(), $id, $request->user());
+
+        return response($task);
     }
 }

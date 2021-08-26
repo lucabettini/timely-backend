@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Task;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -46,19 +47,19 @@ class TaskTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJsonStructure([
-                '*' => [
-                    "id",
-                    "created_at",
-                    "updated_at",
-                    "user_id",
-                    "name",
-                    "bucket",
-                    "area",
-                    "description",
-                    "scheduled_for",
-                    "completed",
-                    "color"
-                ],
+
+                "id",
+                "created_at",
+                "updated_at",
+                "user_id",
+                "name",
+                "bucket",
+                "area",
+                "description",
+                "scheduled_for",
+                "completed",
+                "color"
+
             ]);
     }
 
@@ -75,5 +76,31 @@ class TaskTest extends TestCase
         ]);
 
         $response->assertStatus(200);
+    }
+
+    public function test_update_task()
+    {
+        $user = User::factory()->create();
+        $task = Task::factory()->for($user)->create();
+
+
+
+        $response = $this->actingAs($user)->putJson("/api/tasks/$task->id", [
+            "name" => 'changed task',
+            "bucket" => 'myBucket',
+            "area" => 'myArea',
+            "description" => null,
+            "completed" => true,
+            "scheduled_for" => '2021-08-26'
+        ]);
+
+        $response->assertStatus(200)->assertJson([
+            "name" => 'changed task',
+            "bucket" => 'myBucket',
+            "area" => 'myArea',
+            "description" => null,
+            "completed" => true,
+            "scheduled_for" => '2021-08-26'
+        ]);
     }
 }
