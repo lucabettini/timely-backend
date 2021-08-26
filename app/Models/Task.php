@@ -54,7 +54,7 @@ class Task extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function timeUnit()
+    public function timeUnits()
     {
         return $this->hasMany(TimeUnit::class);
     }

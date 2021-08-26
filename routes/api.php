@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Tasks\RecurringTaskController;
 use App\Http\Controllers\Tasks\TaskController;
+use App\Http\Controllers\Tasks\TimeUnitController;
 use App\Http\Controllers\Users\LoginController;
 use App\Http\Controllers\Users\RegisterController;
 use Illuminate\Http\Request;
@@ -33,4 +34,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/tasks/{id}/recurring', [RecurringTaskController::class, 'store']);
     Route::put('/tasks/{id}/recurring', [RecurringTaskController::class, 'update']);
+
+    Route::post('/tasks/{task_id}/time-unit', [TimeUnitController::class, 'store']);
 });

@@ -17,8 +17,8 @@ class CreateTimeUnitsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->foreignId('task_id')->constrained()->onDelete('cascade');
-            $table->time('start_time')->nullable();
-            $table->time('end_time');
+            $table->dateTime('start_time')->nullable();
+            $table->dateTime('end_time')->nullable();
         });
     }
 
