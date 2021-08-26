@@ -44,4 +44,13 @@ class TaskController extends Controller
 
         return response($task);
     }
+
+    public function destroy(Request $request, $id)
+    {
+        $this->repository->deleteTask($id, $request->user());
+
+        return response([
+            'message' => 'Task deleted successfully'
+        ]);
+    }
 }

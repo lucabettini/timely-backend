@@ -29,6 +29,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/tasks', [TaskController::class, 'store']);
     Route::put('/tasks/{id}', [TaskController::class, 'update']);
+    Route::delete('/tasks/{id}', [TaskController::class, 'destroy']);
 
     Route::post('/tasks/{id}/recurring', [RecurringTaskController::class, 'store']);
     Route::put('/tasks/{id}/recurring', [RecurringTaskController::class, 'update']);
