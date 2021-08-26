@@ -29,7 +29,8 @@ class RecurringTaskController extends Controller
 
             $task = $this->repository->updateRecurringTask($request->all(), $id, $request->user());
 
-            return response($task);
+
+            return response($task, 200);
         } catch (\Exception $e) {
 
             return response(['message' => $e->getMessage()], $e->getCode());

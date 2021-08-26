@@ -17,7 +17,7 @@ class RecurringTaskRepository
 
     public function updateRecurringTask($values, $task_id, $user)
     {
-        $task = $user->tasks()->findOrFail($task_id);
+        $task = $user->tasks()->with('recurring')->findOrFail($task_id);
 
         // Throw exception if recurring task does not exists
         if (!$task->recurring) {

@@ -25,7 +25,6 @@ class TaskController extends Controller
 
     public function getById(Request $request, $id)
     {
-        // Get Id from request
         $task = $this->repository->getTaskById($id, $request->user());
 
         return response([$task]);

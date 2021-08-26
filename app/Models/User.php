@@ -35,6 +35,11 @@ class User extends Authenticatable
         return $this->hasMany(Task::class);
     }
 
+    public function recurring()
+    {
+        return $this->hasOneThrough(RecurringTask::class, Task::class);
+    }
+
     public function timeUnits()
     {
         return $this->hasManyThrough(TimeUnit::class, Task::class);

@@ -17,7 +17,22 @@ class TaskTest extends TestCase
 
         $response = $this->actingAs($user)->get('/api/tasks');
 
-        $response->assertStatus(200);
+        $response->assertStatus(200)
+            ->assertJsonStructure([
+                '*' => [
+                    "id",
+                    "created_at",
+                    "updated_at",
+                    "user_id",
+                    "name",
+                    "bucket",
+                    "area",
+                    "description",
+                    "scheduled_for",
+                    "completed",
+                    "color"
+                ],
+            ]);
     }
 
     public function test_get_task_by_id()
