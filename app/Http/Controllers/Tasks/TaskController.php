@@ -30,6 +30,15 @@ class TaskController extends Controller
         return response($task);
     }
 
+    public function getAreas(Request $request)
+    {
+        $areas = $this->repository->getAreas($request->user());
+
+        return response([
+            'areas' => $areas,
+        ]);
+    }
+
     public function store(TaskRequest $request)
     {
 

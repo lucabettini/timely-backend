@@ -16,8 +16,8 @@ class UserTest extends TestCase
         $response = $this->postJson('/api/register', [
             'name' => 'johndoe',
             'email' => 'johndoe@gmail.com',
-            'password' => 'abc123456',
-            'password_confirmation' => 'abc123456'
+            'password' => 'Abc123456',
+            'password_confirmation' => 'Abc123456'
         ]);
 
         $response
@@ -36,7 +36,7 @@ class UserTest extends TestCase
 
         $response = $this->postJson('/api/login', [
             'email' => 'johndoe@gmail.com',
-            'password' => 'abc123456'
+            'password' => 'Abc123456'
         ]);
 
         $response
@@ -70,7 +70,7 @@ class UserTest extends TestCase
 
         $response = $this->postJson('/api/login', [
             'email' => 'johndoe@gmail.com',
-            'password' => 'abc12345'
+            'password' => 'Abc12345'
         ]);
 
         $response

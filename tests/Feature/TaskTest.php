@@ -48,6 +48,18 @@ class TaskTest extends TestCase
             ->assertJsonStructure($this->task_structure);
     }
 
+    public function test_get_areas()
+    {
+        $user = User::factory()->create();
+        $tasks = Task::factory()->for($user)->count(5)->create();
+        $areas = $tasks->pluck('area');
+        $response = $this->actingAs($user)->get("/api/areas");
+
+        $response->assertStatus(200)->assertJson([
+            'areas' => $areas->all(),
+        ]);
+    }
+
     public function test_create_task()
     {
         $user = User::factory()->create();

@@ -16,6 +16,12 @@ class TaskRepository
         return $user->tasks;
     }
 
+    public function getAreas(User $user)
+    {
+        $tasks = $user->tasks;
+        return $tasks->pluck('area');
+    }
+
     public function createTask($values, User $user)
     {
         return $user->tasks()->create($values);
