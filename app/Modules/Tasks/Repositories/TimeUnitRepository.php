@@ -14,12 +14,12 @@ class TimeUnitRepository
         return $task->timeUnits()->create($values);
     }
 
-    // public function updateTimeUnit($values, $task_id, User $user)
-    // {
-    //     $task = $user->time_units()->findOrFail($task_id);
-    //     $task->update($values);
-    //     return $task;
-    // }
+    public function updateTimeUnit($values, $id, User $user)
+    {
+        $time_unit = $user->time_units()->findOrFail($id);
+        $time_unit->update($values);
+        return $time_unit;
+    }
 
     // public function deleteTimeUnit($task_id, User $user)
     // {

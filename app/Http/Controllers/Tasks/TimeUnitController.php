@@ -23,4 +23,11 @@ class TimeUnitController extends Controller
 
         return response($time_unit);
     }
+
+    public function update(TimeUnitRequest $request, $id)
+    {
+        $time_unit = $this->repository->updateTimeUnit($request->all(), $id, $request->user());
+
+        return response($time_unit);
+    }
 }
