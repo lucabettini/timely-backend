@@ -30,4 +30,13 @@ class TimeUnitController extends Controller
 
         return response($time_unit);
     }
+
+    public function destroy(Request $request, $id)
+    {
+        $this->repository->deleteTimeUnit($id, $request->user());
+
+        return response([
+            'message' => 'Time unit deleted successfully'
+        ]);
+    }
 }

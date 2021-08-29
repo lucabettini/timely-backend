@@ -21,10 +21,10 @@ class TimeUnitRepository
         return $time_unit;
     }
 
-    // public function deleteTimeUnit($task_id, User $user)
-    // {
-    //     $task = $user->time_units()->findOrFail($task_id);
+    public function deleteTimeUnit($id, User $user)
+    {
+        $task = $user->time_units()->findOrFail($id);
 
-    //     $task->delete();
-    // }
+        $task->delete();
+    }
 }
