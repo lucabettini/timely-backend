@@ -21,6 +21,10 @@ class RecurringTask extends Model
         'end_date'
     ];
 
+    protected $casts = [
+        'end_date' => 'date'   // Convert date to Carbon instance
+    ];
+
     //---------------//
     // RELATIONSHIPS // 
     //---------------//

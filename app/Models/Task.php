@@ -31,16 +31,17 @@ class Task extends Model
         'description' => null
     ];
 
-    // Convert 1 and 0 into true and false
+
     protected $casts = [
-        'completed' => 'boolean'
+        'completed' => 'boolean',   // Convert 1 and 0 into true and false
+        'scheduled_for' => 'date'   // Convert date to Carbon instance
     ];
 
     //--------------//
     // LOCAL SCOPES // 
     //--------------//
 
-    public function scopeOpen($query)
+    public function scopeActive($query)
     {
         return $query->where('completed', false);
     }

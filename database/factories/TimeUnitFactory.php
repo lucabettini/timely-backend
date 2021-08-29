@@ -22,8 +22,8 @@ class TimeUnitFactory extends Factory
     public function definition()
     {
         return [
-            'start_time' => $this->faker->date(),
-            'end_time' => $this->faker->date()
+            'start_time' => $this->faker->dateTime(),
+            'end_time' => $this->faker->dateTime()
         ];
     }
 }
