@@ -28,4 +28,16 @@ class RecurringTaskRepository
 
         return $user->tasks()->with('recurring')->find($task_id);
     }
+
+    public function deleteRecurringTask($task_id, $user)
+    {
+        $task = $user->tasks()->with('recurring')->findOrFail($task_id);
+
+        // Throw exception if recurring task does not exists
+        if (!$task->recurring) {
+            throw new Exception('This task is not recurring', 400);
+        }
+
+        $task->recurring()->delete();
+    }
 }

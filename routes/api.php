@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/tasks/{id}/recurring', [RecurringTaskController::class, 'store']);
     Route::put('/tasks/{id}/recurring', [RecurringTaskController::class, 'update']);
+    Route::delete('/tasks/{id}/recurring', [RecurringTaskController::class, 'destroy']);
 
     Route::post('/tasks/{task_id}/time-unit', [TimeUnitController::class, 'store']);
     Route::put('/time_units/{id}', [TimeUnitController::class, 'update']);

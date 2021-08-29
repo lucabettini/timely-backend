@@ -54,4 +54,17 @@ class RecurringTaskTest extends TestCase
             ]
         ]);
     }
+
+    public function test_delete_recurring_task()
+    {
+        $user = User::factory()->create();
+        $task = Task::factory()->for($user)->hasRecurring()->create();
+        $id = $task->id;
+
+        $response = $this->actingAs($user)->deleteJson("/api/tasks/$id/recurring");
+
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Recurrence deleted successfully'
+        ]);
+    }
 }
