@@ -23,6 +23,7 @@ class CreateTasksTable extends Migration
             $table->text('description')->nullable();
             $table->date('scheduled_for');
             $table->boolean('completed');
+            $table->boolean('tracked');
             $table->string('color', 6);
         });
     }

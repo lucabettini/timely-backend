@@ -27,6 +27,7 @@ class Task extends Model
     // Default attribute values 
     protected $attributes = [
         'completed' => false,
+        'tracked' => true,
         'color' => '000000',
         'description' => null
     ];
@@ -37,6 +38,7 @@ class Task extends Model
 
     protected $casts = [
         'completed' => 'boolean',   // Convert 1 and 0 into true and false
+        'tracked' => 'boolean',
         'scheduled_for' => 'date'   // Convert date to Carbon instance
     ];
 
@@ -53,6 +55,11 @@ class Task extends Model
     public function scopeActive($query)
     {
         return $query->where('completed', false);
+    }
+
+    public function scopeTracked($query)
+    {
+        return $query->where('tracked', true);
     }
 
     //---------------//
