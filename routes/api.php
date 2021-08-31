@@ -27,8 +27,10 @@ Route::post('/login', [LoginController::class, 'store']);
 // PROTECTED ROUTES 
 Route::middleware(['auth'])->group(function () {
     Route::get('/tasks', [GetTaskController::class, 'getAll']);
+    Route::get('/tasks/open', [GetTaskController::class, 'getOpen']);
     Route::get('/tasks/{id}', [GetTaskController::class, 'getById']);
     Route::get('/areas', [GetTaskController::class, 'getAreas']);
+
 
     Route::post('/tasks', [EditTaskController::class, 'store']);
     Route::put('/tasks/{id}', [EditTaskController::class, 'update']);

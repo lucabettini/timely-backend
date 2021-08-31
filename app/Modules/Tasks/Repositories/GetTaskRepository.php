@@ -21,4 +21,9 @@ class GetTaskRepository
         $tasks = $user->tasks;
         return $tasks->pluck('area');
     }
+
+    public function getOpen(User $user)
+    {
+        return $user->tasks()->active()->tracked()->get();
+    }
 }

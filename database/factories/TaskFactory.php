@@ -27,7 +27,7 @@ class TaskFactory extends Factory
             'area' => $this->faker->name(),
             'scheduled_for' => $this->faker->date(),
             'completed' => false,
-            'completed' => true,
+            'tracked' => true,
             'color' => '000000'
         ];
     }

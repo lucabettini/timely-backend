@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Tasks;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TaskResource;
 use App\Modules\Tasks\Repositories\GetTaskRepository;
 use Illuminate\Http\Request;
 
@@ -36,5 +37,12 @@ class GetTaskController extends Controller
         return response([
             'areas' => $areas,
         ]);
+    }
+
+    public function getOpen(Request $request)
+    {
+        $tasks = $this->repository->getOpen($request->user());
+
+        return TaskResource::collection($tasks);
     }
 }

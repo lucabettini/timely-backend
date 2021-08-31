@@ -32,12 +32,18 @@ class Task extends Model
         'description' => null
     ];
 
+    // Eager load TimeUnit by default
+    protected $with = ['timeUnits'];
+
+    // Add this accessors to JSON serialization
     protected $appends = [
-        'duration'
+        'duration',
+        'timeUnitsCount'
     ];
 
     protected $casts = [
-        'completed' => 'boolean',   // Convert 1 and 0 into true and false
+        // Convert 1 and 0 into true and false
+        'completed' => 'boolean',
         'tracked' => 'boolean',
         'scheduled_for' => 'date'   // Convert date to Carbon instance
     ];
@@ -46,6 +52,11 @@ class Task extends Model
     public function getDurationAttribute()
     {
         return $this->timeUnits->sum('duration');
+    }
+
+    public function getTimeUnitsCountAttribute()
+    {
+        return $this->timeUnits->count();
     }
 
     //--------------//
