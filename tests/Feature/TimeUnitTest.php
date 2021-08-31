@@ -8,6 +8,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class TimeUnitTest extends TestCase
@@ -24,7 +25,12 @@ class TimeUnitTest extends TestCase
         ];
         $response = $this->actingAs($user)->postJson("/api/tasks/$task->id/time-unit", $values);
 
-        $response->assertStatus(200)->assertJson($values);
+        $response->assertStatus(201)->assertJson(
+            fn (AssertableJson $json) =>
+            $json->where('data.start_time', $values['start_time'])
+                ->where('data.end_time', $values['end_time'])
+                ->etc()
+        );
     }
 
     public function test_update_time_unit()
@@ -38,7 +44,12 @@ class TimeUnitTest extends TestCase
         ];
         $response = $this->actingAs($user)->putJson("/api/time_units/$time_unit->id", $values);
 
-        $response->assertStatus(200)->assertJson($values);
+        $response->assertStatus(200)->assertJson(
+            fn (AssertableJson $json) =>
+            $json->where('data.start_time', $values['start_time'])
+                ->where('data.end_time', $values['end_time'])
+                ->etc()
+        );
     }
 
     public function test_delete_time_unit()

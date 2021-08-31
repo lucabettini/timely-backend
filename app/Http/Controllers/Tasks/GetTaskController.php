@@ -20,14 +20,14 @@ class GetTaskController extends Controller
     {
         $tasks = $this->repository->getAllTasks($request->user());
 
-        return response($tasks);
+        return TaskResource::collection($tasks);
     }
 
     public function getById(Request $request, $id)
     {
         $task = $this->repository->getTaskById($id, $request->user());
 
-        return response($task);
+        return new TaskResource($task);
     }
 
     public function getAreas(Request $request)

@@ -14,16 +14,16 @@ class GetTaskTest extends TestCase
 
     private $task_structure = [
         "id",
-        "created_at",
-        "updated_at",
-        "user_id",
         "name",
         "bucket",
         "area",
         "description",
         "scheduled_for",
         "completed",
-        "color"
+        "color",
+        "tracked",
+        "duration",
+        "time_units"
     ];
 
     public function test_get_all_tasks()
@@ -33,7 +33,9 @@ class GetTaskTest extends TestCase
 
         $response->assertStatus(200)
             ->assertJsonStructure([
-                '*' => $this->task_structure,
+                'data' => [
+                    '*' => $this->task_structure,
+                ]
             ]);
     }
 
@@ -45,7 +47,9 @@ class GetTaskTest extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertJsonStructure($this->task_structure);
+            ->assertJsonStructure([
+                'data' => $this->task_structure
+            ]);
     }
 
     public function test_get_areas()
@@ -57,6 +61,17 @@ class GetTaskTest extends TestCase
 
         $response->assertStatus(200)->assertJson([
             'areas' => $areas->all(),
+        ]);
+    }
+
+    public function test_get_open_tasks()
+    {
+        $user = User::factory()->hasTasks(5)->create();
+        $response = $this->actingAs($user)->get("/api/tasks/open");
+
+        $response->assertStatus(200)->assertJsonMissing([
+            'completed' => true,
+            'tracked' => false,
         ]);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tasks;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tasks\TimeUnitRequest;
+use App\Http\Resources\TimeUnitResource;
 use App\Modules\Tasks\Repositories\TimeUnitRepository;
 use Illuminate\Http\Request;
 
@@ -21,14 +22,14 @@ class TimeUnitController extends Controller
 
         $time_unit = $this->repository->createTimeUnit($request->all(), $task_id, $request->user());
 
-        return response($time_unit);
+        return new TimeUnitResource($time_unit);
     }
 
     public function update(TimeUnitRequest $request, $id)
     {
         $time_unit = $this->repository->updateTimeUnit($request->all(), $id, $request->user());
 
-        return response($time_unit);
+        return new TimeUnitResource($time_unit);
     }
 
     public function destroy(Request $request, $id)
