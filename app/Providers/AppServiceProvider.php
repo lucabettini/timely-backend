@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +25,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        if (App::environment('local')) {
+            DB::listen(function ($query) {
+                $out = new \Symfony\Component\Console\Output\ConsoleOutput();
+                $out->writeln($query->sql);
+            });
+        };
     }
 }

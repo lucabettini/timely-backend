@@ -31,11 +31,20 @@ class Task extends Model
         'description' => null
     ];
 
+    protected $appends = [
+        'duration'
+    ];
 
     protected $casts = [
         'completed' => 'boolean',   // Convert 1 and 0 into true and false
         'scheduled_for' => 'date'   // Convert date to Carbon instance
     ];
+
+
+    public function getDurationAttribute()
+    {
+        return $this->timeUnits->sum('duration');
+    }
 
     //--------------//
     // LOCAL SCOPES // 

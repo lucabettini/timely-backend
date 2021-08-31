@@ -16,7 +16,7 @@ class TimeUnit extends Model
         'end_time'
     ];
 
-    protected $append = [
+    protected $appends = [
         'duration'
     ];
 
