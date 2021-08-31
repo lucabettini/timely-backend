@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Task;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -21,7 +22,7 @@ class EditTaskTest extends TestCase
             "bucket" => "Birthdays",
             "area" => "Family & friends",
             "description" => "Birthday party is at 20.00",
-            "scheduled_for" => "2021-08-25"
+            "scheduled_for" => Carbon::tomorrow()->toISOString()
         ];
         $response = $this->actingAs($user)->postJson('/api/tasks', $values);
 
@@ -38,7 +39,7 @@ class EditTaskTest extends TestCase
             "area" => 'myArea',
             "description" => null,
             "completed" => true,
-            "scheduled_for" => '2021-08-26'
+            "scheduled_for" => Carbon::tomorrow()->toISOString()
         ];
         $response = $this->actingAs($user)->putJson("/api/tasks/$task->id", $values);
 

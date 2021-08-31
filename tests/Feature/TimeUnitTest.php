@@ -19,8 +19,8 @@ class TimeUnitTest extends TestCase
         $user = User::factory()->create();
         $task = Task::factory()->for($user)->create();
         $values = [
-            'start_time' => Carbon::now()->format('Y-m-d h:i:s'),
-            'end_time' => Carbon::now()->addHour()->format('Y-m-d h:i:s')
+            'start_time' => Carbon::now()->floorSecond()->toISOString(),
+            'end_time' => Carbon::now()->addHour()->floorSecond()->toISOString()
         ];
         $response = $this->actingAs($user)->postJson("/api/tasks/$task->id/time-unit", $values);
 
@@ -33,8 +33,8 @@ class TimeUnitTest extends TestCase
         $task = Task::factory()->for($user)->create();
         $time_unit = TimeUnit::factory()->for($task)->create();
         $values = [
-            'start_time' => Carbon::now()->format('Y-m-d h:i:s'),
-            'end_time' => Carbon::now()->addHour()->format('Y-m-d h:i:s')
+            'start_time' => Carbon::now()->floorSecond()->toISOString(),
+            'end_time' => Carbon::now()->addHour()->floorSecond()->toISOString()
         ];
         $response = $this->actingAs($user)->putJson("/api/time_units/$time_unit->id", $values);
 
