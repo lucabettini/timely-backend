@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Tasks;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Tasks\RecurringTaskRequest;
+use App\Http\Resources\TaskResource;
 use App\Modules\Tasks\Repositories\RecurringTaskRepository;
 use Illuminate\Http\Request;
 
@@ -21,14 +22,15 @@ class RecurringTaskController extends Controller
     {
         $task = $this->repository->createRecurringTask($request->all(), $id, $request->user());
 
-        return response($task);
+        return new TaskResource($task);
     }
 
     public function update(RecurringTaskRequest $request, $id)
     {
         try {
             $task = $this->repository->updateRecurringTask($request->all(), $id, $request->user());
-            return response($task);
+
+            return new TaskResource($task);
         } catch (\Exception $e) {
             return response(['message' => $e->getMessage()], $e->getCode());
         }

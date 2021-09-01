@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\RecurringTask;
 use App\Models\Task;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -24,13 +25,11 @@ class RecurringTaskTest extends TestCase
             'occurrences' => 2
         ]);
 
-        $response->assertStatus(200)->assertJson([
-            'recurring' => [
-                'frequency' => 'year',
-                'interval' => 5,
-                'occurrences' => 2,
-                'end_date' => null
-            ]
+        $response->assertStatus(200)->assertJsonPath('data.recurring', [
+            'frequency' => 'year',
+            'interval' => 5,
+            'occurrences' => 2,
+            'end_date' => null
         ]);
     }
 
@@ -43,15 +42,15 @@ class RecurringTaskTest extends TestCase
         $response = $this->actingAs($user)->putJson("/api/tasks/$id/recurring", [
             'frequency' => 'year',
             'interval' => 5,
-            'occurrences' => 2
+            'occurrences' => 2,
+            'end_date' => null
         ]);
 
-        $response->assertStatus(200)->assertJson([
-            'recurring' => [
-                'frequency' => 'year',
-                'interval' => 5,
-                'occurrences' => 2,
-            ]
+        $response->assertStatus(200)->assertJsonPath('data.recurring', [
+            'frequency' => 'year',
+            'interval' => 5,
+            'occurrences' => 2,
+            'end_date' => null
         ]);
     }
 

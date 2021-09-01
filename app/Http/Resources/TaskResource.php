@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Requests\Tasks\RecurringTaskRequest;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class TaskResource extends JsonResource
@@ -26,7 +27,7 @@ class TaskResource extends JsonResource
             'color' => $this->color,
             'duration' => $this->duration,
             'time_units' => $this->timeUnitsCount,
-            'is_recurring' => $this->isRecurring
+            'recurring' => new RecurringTaskResource($this->recurring)
         ];
     }
 }
