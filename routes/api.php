@@ -30,8 +30,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tasks/open', [GetTaskController::class, 'getOpen']);
     Route::get('/tasks/overdue', [GetTaskController::class, 'getOverdue']);
     Route::get('/tasks/week', [GetTaskController::class, 'getWeek']);
+    Route::get('tasks/archive/{area}', [GetTaskController::class, 'getInactiveByArea']);
     Route::get('/tasks/{id}', [GetTaskController::class, 'getById']);
     Route::get('/areas', [GetTaskController::class, 'getAreas']);
+
 
 
     Route::post('/tasks', [EditTaskController::class, 'store']);

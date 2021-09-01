@@ -25,6 +25,8 @@ class RecurringTask extends Model
         'end_date' => 'date'   // Convert date to Carbon instance
     ];
 
+    public $timestamps = false;
+
     //---------------//
     // RELATIONSHIPS // 
     //---------------//

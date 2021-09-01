@@ -26,6 +26,8 @@ class TimeUnit extends Model
         'end_time' => 'datetime'
     ];
 
+    public $timestamps = false;
+
     //--------------//
     // LOCAL SCOPES // 
     //--------------//

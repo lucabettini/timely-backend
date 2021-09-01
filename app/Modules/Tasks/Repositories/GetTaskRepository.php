@@ -39,4 +39,9 @@ class GetTaskRepository
         return $user->tasks()->active()
             ->whereDate('scheduled_for', '<=', Carbon::today()->addDays(7));
     }
+
+    public function getInactiveByArea(User $user, $area)
+    {
+        return $user->tasks()->where('completed', true)->where('area', $area)->get();
+    }
 }

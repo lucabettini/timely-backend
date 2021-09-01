@@ -61,4 +61,11 @@ class GetTaskController extends Controller
 
         return TaskResource::collection($tasks);
     }
+
+    public function getInactiveByArea(Request $request, $area)
+    {
+        $tasks = $this->repository->getInactiveByArea($request->user(), $area);
+
+        return TaskResource::collection($tasks);
+    }
 }

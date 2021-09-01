@@ -25,7 +25,8 @@ class GetTaskTest extends TestCase
         "color",
         "tracked",
         "duration",
-        "time_units"
+        "time_units",
+        "recurring"
     ];
 
     public function test_get_all_tasks()
@@ -49,9 +50,7 @@ class GetTaskTest extends TestCase
 
         $response
             ->assertStatus(200)
-            ->assertJsonStructure([
-                'data' => $this->task_structure
-            ]);
+            ->assertJsonStructure($this->task_structure);
     }
 
     public function test_get_areas()
@@ -88,5 +87,21 @@ class GetTaskTest extends TestCase
 
         $received_date = new DateTime($response['data'][0]['scheduled_for']);
         $this->assertLessThan(Carbon::today()->getTimestamp(), $received_date->getTimestamp());
+    }
+
+    public function test_get_inactive_by_area()
+    {
+        $user = User::factory()->create();
+        $task = Task::factory()->for($user)->state([
+            'completed' => true
+        ])->hasTimeUnits()->create();
+
+        $response = $this->actingAs($user)->get("/api/tasks/archive/$task->area");
+
+        $response->assertStatus(200)->assertJsonMissing([
+            'completed' => false,
+        ]);
+
+        $this->assertEquals($task->area, $response['data'][0]['area']);
     }
 }

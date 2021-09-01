@@ -53,6 +53,8 @@ class Task extends Model
         'scheduled_for' => 'date'   // Convert date to Carbon instance
     ];
 
+    public $timestamps = false;
+
 
     public function getDurationAttribute()
     {
