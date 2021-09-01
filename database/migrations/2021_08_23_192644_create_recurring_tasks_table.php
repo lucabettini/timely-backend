@@ -15,7 +15,6 @@ class CreateRecurringTasksTable extends Migration
     {
         Schema::create('recurring_tasks', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->foreignId('task_id')->constrained()->onDelete('cascade');
             $table->string('frequency', 5);
             $table->integer('interval')->unsigned();

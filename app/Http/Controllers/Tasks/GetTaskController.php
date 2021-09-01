@@ -27,7 +27,9 @@ class GetTaskController extends Controller
     {
         $task = $this->repository->getTaskById($id, $request->user());
 
-        return new TaskResource($task);
+        // We don't return the resource but the task itself 
+        // with all the timeUnits eager loaded inside
+        return response($task);
     }
 
     public function getAreas(Request $request)
