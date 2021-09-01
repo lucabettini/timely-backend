@@ -44,4 +44,9 @@ class GetTaskRepository
     {
         return $user->tasks()->where('completed', true)->where('area', $area)->get();
     }
+
+    public function getActiveByArea(User $user, $area)
+    {
+        return $user->tasks()->active()->where('area', $area)->get();
+    }
 }

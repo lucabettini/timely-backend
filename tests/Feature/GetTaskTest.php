@@ -94,12 +94,26 @@ class GetTaskTest extends TestCase
         $user = User::factory()->create();
         $task = Task::factory()->for($user)->state([
             'completed' => true
-        ])->hasTimeUnits()->create();
+        ])->create();
 
         $response = $this->actingAs($user)->get("/api/tasks/archive/$task->area");
 
         $response->assertStatus(200)->assertJsonMissing([
             'completed' => false,
+        ]);
+
+        $this->assertEquals($task->area, $response['data'][0]['area']);
+    }
+
+    public function test_get_active_by_area()
+    {
+        $user = User::factory()->create();
+        $task = Task::factory()->for($user)->create();
+
+        $response = $this->actingAs($user)->get("/api/tasks/active/$task->area");
+
+        $response->assertStatus(200)->assertJsonMissing([
+            'completed' => true,
         ]);
 
         $this->assertEquals($task->area, $response['data'][0]['area']);

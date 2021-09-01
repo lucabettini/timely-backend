@@ -68,4 +68,11 @@ class GetTaskController extends Controller
 
         return TaskResource::collection($tasks);
     }
+
+    public function getActiveByArea(Request $request, $area)
+    {
+        $tasks = $this->repository->getActiveByArea($request->user(), $area);
+
+        return TaskResource::collection($tasks);
+    }
 }
