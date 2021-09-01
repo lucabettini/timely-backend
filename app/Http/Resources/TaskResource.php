@@ -26,6 +26,7 @@ class TaskResource extends JsonResource
             'color' => $this->color,
             'duration' => $this->duration,
             'time_units' => $this->timeUnitsCount,
+            'is_recurring' => $this->isRecurring
         ];
     }
 }

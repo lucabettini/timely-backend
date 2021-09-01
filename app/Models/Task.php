@@ -34,12 +34,16 @@ class Task extends Model
     ];
 
     // Eager load TimeUnit by default
-    protected $with = ['timeUnits'];
+    protected $with = [
+        'timeUnits',
+        'recurring'
+    ];
 
     // Add this accessors to JSON serialization
     protected $appends = [
         'duration',
-        'timeUnitsCount'
+        'timeUnitsCount',
+        'isRecurring'
     ];
 
     protected $casts = [
@@ -58,6 +62,11 @@ class Task extends Model
     public function getTimeUnitsCountAttribute()
     {
         return $this->timeUnits->count();
+    }
+
+    public function getIsRecurringAttribute()
+    {
+        return !is_null($this->recurring);
     }
 
     //--------------//
