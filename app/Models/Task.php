@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -71,6 +72,11 @@ class Task extends Model
     public function scopeTracked($query)
     {
         return $query->where('tracked', true);
+    }
+
+    public function scopeOverdue($query)
+    {
+        return $query->active()->whereDate('scheduled_for', '<=', Carbon::today());
     }
 
     //---------------//

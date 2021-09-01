@@ -4,6 +4,8 @@ namespace Tests\Feature;
 
 use App\Models\Task;
 use App\Models\User;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -73,5 +75,18 @@ class GetTaskTest extends TestCase
             'completed' => true,
             'tracked' => false,
         ]);
+    }
+
+    public function test_get_overdue_tasks()
+    {
+        $user = User::factory()->hasTasks(20)->create();
+        $response = $this->actingAs($user)->get("/api/tasks/overdue");
+
+        $response->assertStatus(200)->assertJsonMissing([
+            'completed' => true
+        ]);
+
+        $received_date = new DateTime($response['data'][0]['scheduled_for']);
+        $this->assertLessThan(Carbon::today()->getTimestamp(), $received_date->getTimestamp());
     }
 }

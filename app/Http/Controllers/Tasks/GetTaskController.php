@@ -45,4 +45,11 @@ class GetTaskController extends Controller
 
         return TaskResource::collection($tasks);
     }
+
+    public function getOverdue(Request $request)
+    {
+        $tasks = $this->repository->getOverdue($request->user());
+
+        return TaskResource::collection($tasks);
+    }
 }

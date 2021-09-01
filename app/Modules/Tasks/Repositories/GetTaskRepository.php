@@ -26,4 +26,9 @@ class GetTaskRepository
     {
         return $user->tasks()->active()->tracked()->get();
     }
+
+    public function getOverdue(User $user)
+    {
+        return $user->tasks()->overdue()->get();
+    }
 }
