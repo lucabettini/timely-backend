@@ -23,7 +23,7 @@ class RecurringTaskRepository
 
         // Throw exception if recurring task does not exists
         if (!$task->recurring) {
-            throw new Exception('This task is not recurring', 400);
+            throw new Exception('This task is not recurring');
         }
 
         $task->recurring()->update($values);
@@ -37,7 +37,7 @@ class RecurringTaskRepository
 
         // Throw exception if recurring task does not exists
         if (!$task->recurring) {
-            throw new Exception('This task is not recurring', 400);
+            throw new Exception('This task is not recurring');
         }
 
         $task->recurring()->delete();
