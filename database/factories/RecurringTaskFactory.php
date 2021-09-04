@@ -25,7 +25,7 @@ class RecurringTaskFactory extends Factory
         return [
             'frequency' => 'year',
             'interval' => $this->faker->randomNumber(),
-            'occurrences' => $this->faker->randomNumber(),
+            'occurrences_left' => $this->faker->randomNumber(),
             'end_date' => $this->faker->date(),
         ];
     }

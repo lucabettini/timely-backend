@@ -6,16 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Tasks\RecurringTaskRequest;
 use App\Http\Resources\TaskResource;
 use App\Modules\Tasks\Repositories\RecurringTaskRepository;
+use App\Modules\Tasks\Services\CompleteRecurringTaskService;
 use Illuminate\Http\Request;
 
 class RecurringTaskController extends Controller
 {
 
     private $repository;
+    private $service;
 
-    public function __construct(RecurringTaskRepository $repository)
+    public function __construct(RecurringTaskRepository $repository, CompleteRecurringTaskService $service)
     {
         $this->repository = $repository;
+        $this->service = $service;
     }
 
     public function store(RecurringTaskRequest $request, $id)
@@ -32,7 +35,7 @@ class RecurringTaskController extends Controller
 
             return new TaskResource($task);
         } catch (\Exception $e) {
-            return response(['message' => $e->getMessage()], $e->getCode());
+            return response(['message' => $e->getMessage()], 400);
         }
     }
 
@@ -44,7 +47,19 @@ class RecurringTaskController extends Controller
                 'message' => 'Recurrence deleted successfully'
             ]);
         } catch (\Exception $e) {
-            return response(['message' => $e->getMessage()], $e->getCode());
+            return response(['message' => $e->getMessage()], 400);
+        }
+    }
+
+    public function complete(Request $request, $id)
+    {
+        try {
+            $this->service->complete($request->user(), $id);
+            return response([
+                'message' => 'Success'
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => $e->getMessage()], 400);
         }
     }
 }

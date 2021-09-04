@@ -17,7 +17,7 @@ class RecurringTaskResource extends JsonResource
         return [
             'frequency' => $this->frequency,
             'interval' => $this->interval,
-            'occurrences' => $this->occurrences,
+            'occurrences_left' => $this->occurrences_left,
             'end_date' => $this->end_date
         ];
     }

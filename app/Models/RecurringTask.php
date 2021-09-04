@@ -17,8 +17,12 @@ class RecurringTask extends Model
     protected $fillable = [
         'frequency',
         'interval',
-        'occurrences',
+        'occurrences_left',
         'end_date'
+    ];
+
+    protected $attributes = [
+        'interval' => 1
     ];
 
     protected $casts = [

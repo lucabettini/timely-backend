@@ -22,13 +22,13 @@ class RecurringTaskTest extends TestCase
         $response = $this->actingAs($user)->postJson("/api/tasks/$id/recurring", [
             'frequency' => 'year',
             'interval' => 5,
-            'occurrences' => 2
+            'occurrences_left' => 2
         ]);
 
         $response->assertStatus(200)->assertJsonPath('data.recurring', [
             'frequency' => 'year',
             'interval' => 5,
-            'occurrences' => 2,
+            'occurrences_left' => 2,
             'end_date' => null
         ]);
     }
@@ -42,14 +42,14 @@ class RecurringTaskTest extends TestCase
         $response = $this->actingAs($user)->putJson("/api/tasks/$id/recurring", [
             'frequency' => 'year',
             'interval' => 5,
-            'occurrences' => 2,
+            'occurrences_left' => 2,
             'end_date' => null
         ]);
 
         $response->assertStatus(200)->assertJsonPath('data.recurring', [
             'frequency' => 'year',
             'interval' => 5,
-            'occurrences' => 2,
+            'occurrences_left' => 2,
             'end_date' => null
         ]);
     }
@@ -64,6 +64,20 @@ class RecurringTaskTest extends TestCase
 
         $response->assertStatus(200)->assertJson([
             'message' => 'Recurrence deleted successfully'
+        ]);
+    }
+
+    public function test_complete_recurring_task()
+    {
+        $user = User::factory()->create();
+        $task = Task::factory()->for($user)->hasRecurring()->create();
+        $id = $task->id;
+
+        $response = $this->actingAs($user)->postJson("/api/tasks/$id/complete");
+
+        $this->assertNull($task->recurring);
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Success'
         ]);
     }
 }

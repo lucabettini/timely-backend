@@ -30,7 +30,7 @@ class TaskRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('tasks')->where(function ($query) {
+                Rule::unique('tasks')->ignore($this->route('id'))->where(function ($query) {
                     return $query->where('user_id', Auth::user()->id);
                 })
             ],
@@ -38,7 +38,7 @@ class TaskRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('tasks')->where(function ($query) {
+                Rule::unique('tasks')->ignore($this->route('id'))->where(function ($query) {
                     return $query->where('user_id', Auth::user()->id);
                 })
             ],
@@ -46,7 +46,7 @@ class TaskRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('tasks')->where(function ($query) {
+                Rule::unique('tasks')->ignore($this->route('id'))->where(function ($query) {
                     return $query->where('user_id', Auth::user()->id);
                 })
             ],

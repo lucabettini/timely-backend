@@ -2,6 +2,8 @@
 
 namespace App\Modules\Tasks\Repositories;
 
+use App\Models\RecurringTask;
+use App\Models\Task;
 use Exception;
 
 class RecurringTaskRepository
@@ -39,5 +41,19 @@ class RecurringTaskRepository
         }
 
         $task->recurring()->delete();
+    }
+
+    public function addOccurence(Task $task, RecurringTask $recurring_task)
+    {
+        $recurring_task->occurrences_left = $recurring_task->occurrences_left - 1;
+        $recurring_task->task()->associate($task);
+        $recurring_task->save();
+    }
+
+    public function removeOccurrence(RecurringTask $recurring_task)
+    {
+        $recurring_task->task()->dissociate();
+
+        $recurring_task->save();
     }
 }

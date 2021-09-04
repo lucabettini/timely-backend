@@ -24,9 +24,18 @@ class RecurringTaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'frequency' => 'required|string|max:5',
-            'interval' => 'integer|required',
-            'occurences' => 'integer|nullable',
+            'frequency' => [
+                'required',
+                'string',
+                'max:5',
+                function ($attribute, $value, $fail) {
+                    if (!in_array($value, ['day', 'week', 'month', 'year'])) {
+                        $fail("The '$attribute' is invalid.");
+                    }
+                }
+            ],
+            'interval' => 'integer|nullable',
+            'occurrences_left' => 'integer|nullable',
             'end_date' => 'date|nullable'
         ];
     }

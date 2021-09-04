@@ -2,6 +2,7 @@
 
 namespace App\Modules\Tasks\Repositories;
 
+use App\Models\Task;
 use App\Models\User;
 
 class EditTaskRepository
@@ -23,5 +24,11 @@ class EditTaskRepository
         $task = $user->tasks()->findOrFail($task_id);
 
         $task->delete();
+    }
+
+    public function toggleCompleted(Task $task)
+    {
+        $task->completed = !$task->completed;
+        $task->save();
     }
 }

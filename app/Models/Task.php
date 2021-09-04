@@ -42,8 +42,7 @@ class Task extends Model
     // Add this accessors to JSON serialization
     protected $appends = [
         'duration',
-        'timeUnitsCount',
-        'isRecurring'
+        'timeUnitsCount'
     ];
 
     protected $casts = [
@@ -66,10 +65,6 @@ class Task extends Model
         return $this->timeUnits->count();
     }
 
-    public function getIsRecurringAttribute()
-    {
-        return !is_null($this->recurring);
-    }
 
     //--------------//
     // LOCAL SCOPES // 
