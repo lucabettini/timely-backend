@@ -26,9 +26,9 @@ class EditTaskRepository
         $task->delete();
     }
 
-    public function toggleCompleted(Task $task)
+    public function setCompleted(Task $task, $boolean)
     {
-        $task->completed = !$task->completed;
+        $task->completed = $boolean;
         $task->save();
     }
 }

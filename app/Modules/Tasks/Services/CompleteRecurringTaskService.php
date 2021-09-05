@@ -54,7 +54,7 @@ class CompleteRecurringTaskService
 
 
         // Mark as completed and remove FK
-        $this->edit_task_repository->toggleCompleted($task);
+        $this->edit_task_repository->setCompleted($task, true);
         $this->recurring_task_repository->removeOccurrence($recurring_task);
 
         // If this is the last occurrence left, set to 0 and return
