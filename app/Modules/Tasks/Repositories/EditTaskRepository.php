@@ -42,4 +42,12 @@ class EditTaskRepository
             ->where('bucket', $old_name)
             ->update(['bucket' => $new_name]);
     }
+
+    public function deleteByBucket($bucket, User $user)
+    {
+        DB::table('tasks')
+            ->where('user_id', $user->id)
+            ->where('bucket', $bucket)
+            ->delete();
+    }
 }

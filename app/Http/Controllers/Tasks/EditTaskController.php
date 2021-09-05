@@ -77,4 +77,20 @@ class EditTaskController extends Controller
             return response(['message' => $e->getMessage()], 400);
         }
     }
+
+    public function deleteByBucket(Request $request)
+    {
+        $validated = $request->validate([
+            'bucket' => [
+                'string',
+                'required',
+                'exists:tasks,bucket'
+            ]
+        ]);
+
+        $this->repository->deleteByBucket($validated['bucket'], $request->user());
+        return response([
+            'message' => 'Bucket deleted successfully'
+        ]);
+    }
 }

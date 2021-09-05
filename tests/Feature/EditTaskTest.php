@@ -100,4 +100,20 @@ class EditTaskTest extends TestCase
             'message' => 'Bucket name changed'
         ]);
     }
+
+    public function test_delete_by_bucket()
+    {
+        $user = User::factory()->create();
+        $task = Task::factory()->for($user)->state([
+            'bucket' => 'someName'
+        ])->create();
+
+        $response = $this->actingAs($user)->deleteJson("/api/bucket", [
+            'bucket' => 'someName'
+        ]);
+
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Bucket deleted successfully'
+        ]);
+    }
 }
