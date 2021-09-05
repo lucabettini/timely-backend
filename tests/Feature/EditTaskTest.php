@@ -56,4 +56,28 @@ class EditTaskTest extends TestCase
             'message' => 'Task deleted successfully'
         ]);
     }
+
+    public function test_complete_task()
+    {
+        $user = User::factory()->create();
+        $task = Task::factory()->for($user)->create();
+        $response = $this->actingAs($user)->patchJson("/api/tasks/$task->id/complete");
+
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Task completed successfully'
+        ]);
+    }
+
+    public function test_make_incomplete_task()
+    {
+        $user = User::factory()->create();
+        $task = Task::factory()->for($user)->state([
+            'completed' => true
+        ])->create();
+        $response = $this->actingAs($user)->patchJson("/api/tasks/$task->id/incomplete");
+
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Task set as incomplete'
+        ]);
+    }
 }

@@ -26,8 +26,10 @@ class EditTaskRepository
         $task->delete();
     }
 
-    public function setCompleted(Task $task, $boolean)
+    public function setCompleted($task_id, $boolean, User $user)
     {
+        $task = $user->tasks()->findOrFail($task_id);
+
         $task->completed = $boolean;
         $task->save();
     }

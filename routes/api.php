@@ -36,13 +36,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/areas', [GetTaskController::class, 'getAreas']);
 
     Route::post('/tasks', [EditTaskController::class, 'store']);
+    Route::patch('/tasks/{id}/complete', [EditTaskController::class, 'complete']);
+    Route::patch('/tasks/{id}/incomplete', [EditTaskController::class, 'makeIncomplete']);
     Route::put('/tasks/{id}', [EditTaskController::class, 'update']);
     Route::delete('/tasks/{id}', [EditTaskController::class, 'destroy']);
+
 
     Route::post('/tasks/{id}/recurring', [RecurringTaskController::class, 'store']);
     Route::put('/tasks/{id}/recurring', [RecurringTaskController::class, 'update']);
     Route::delete('/tasks/{id}/recurring', [RecurringTaskController::class, 'destroy']);
-    Route::post('/tasks/{id}/complete', [RecurringTaskController::class, 'complete']);
+    Route::post('/tasks/{id}/recurring/complete', [RecurringTaskController::class, 'complete']);
 
     Route::post('/tasks/{task_id}/time-unit', [TimeUnitController::class, 'store']);
     Route::put('/time_units/{id}', [TimeUnitController::class, 'update']);

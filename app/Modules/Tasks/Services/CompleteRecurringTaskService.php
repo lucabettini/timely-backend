@@ -52,9 +52,8 @@ class CompleteRecurringTaskService
             throw new Exception('This task is not recurring');
         }
 
-
         // Mark as completed and remove FK
-        $this->edit_task_repository->setCompleted($task, true);
+        $this->edit_task_repository->setCompleted($task_id, true, $user);
         $this->recurring_task_repository->removeOccurrence($recurring_task);
 
         // If this is the last occurrence left, set to 0 and return
@@ -66,7 +65,6 @@ class CompleteRecurringTaskService
 
         // If the task should repeat ad infinitum or the end date has yet to come, 
         // create a new task with the right date and set the FK. 
-
         if (
             is_null($recurring_task->end_date) or
             $recurring_task->end_date->getTimestamp() > Carbon::today()->getTimestamp()

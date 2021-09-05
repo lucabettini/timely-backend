@@ -73,7 +73,7 @@ class RecurringTaskTest extends TestCase
         $task = Task::factory()->for($user)->hasRecurring()->create();
         $id = $task->id;
 
-        $response = $this->actingAs($user)->postJson("/api/tasks/$id/complete");
+        $response = $this->actingAs($user)->postJson("/api/tasks/$id/recurring/complete");
 
         $this->assertNull($task->recurring);
         $response->assertStatus(200)->assertJson([

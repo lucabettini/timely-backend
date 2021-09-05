@@ -39,4 +39,20 @@ class EditTaskController extends Controller
             'message' => 'Task deleted successfully'
         ]);
     }
+
+    public function complete(Request $request, $id)
+    {
+        $this->repository->setCompleted($id, true, $request->user());
+        return response([
+            'message' => 'Task completed successfully'
+        ]);
+    }
+
+    public function makeIncomplete(Request $request, $id)
+    {
+        $this->repository->setCompleted($id, false, $request->user());
+        return response([
+            'message' => 'Task set as incomplete'
+        ]);
+    }
 }
