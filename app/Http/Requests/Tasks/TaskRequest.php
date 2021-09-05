@@ -30,25 +30,16 @@ class TaskRequest extends FormRequest
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('tasks')->ignore($this->route('id'))->where(function ($query) {
-                    return $query->where('user_id', Auth::user()->id);
-                })
             ],
             'bucket' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('tasks')->ignore($this->route('id'))->where(function ($query) {
-                    return $query->where('user_id', Auth::user()->id);
-                })
             ],
             'area' => [
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('tasks')->ignore($this->route('id'))->where(function ($query) {
-                    return $query->where('user_id', Auth::user()->id);
-                })
             ],
             'description' => [
                 'string',

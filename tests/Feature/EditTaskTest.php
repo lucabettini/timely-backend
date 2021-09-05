@@ -80,4 +80,24 @@ class EditTaskTest extends TestCase
             'message' => 'Task set as incomplete'
         ]);
     }
+
+    public function test_edit_bucket_name()
+    {
+        $user = User::factory()->create();
+        $task = Task::factory()->for($user)->state([
+            'bucket' => 'someName'
+        ])->create();
+        $values = [
+            'old_name' => 'someName',
+            'new_name' => 'anotherName'
+        ];
+
+        $response = $this->actingAs($user)->patchJson("/api/bucket", $values);
+        $task->refresh();
+
+        $this->assertEquals('anotherName', $task->bucket);
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Bucket name changed'
+        ]);
+    }
 }

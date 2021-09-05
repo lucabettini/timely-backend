@@ -4,6 +4,7 @@ namespace App\Modules\Tasks\Repositories;
 
 use App\Models\Task;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class EditTaskRepository
 {
@@ -32,5 +33,13 @@ class EditTaskRepository
 
         $task->completed = $boolean;
         $task->save();
+    }
+
+    public function editBucketName($old_name, $new_name, User $user)
+    {
+        DB::table('tasks')
+            ->where('user_id', $user->id)
+            ->where('bucket', $old_name)
+            ->update(['bucket' => $new_name]);
     }
 }

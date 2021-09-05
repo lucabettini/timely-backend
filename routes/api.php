@@ -40,6 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/tasks/{id}/incomplete', [EditTaskController::class, 'makeIncomplete']);
     Route::put('/tasks/{id}', [EditTaskController::class, 'update']);
     Route::delete('/tasks/{id}', [EditTaskController::class, 'destroy']);
+    Route::patch('/bucket', [EditTaskController::class, 'editBucketName']);
 
 
     Route::post('/tasks/{id}/recurring', [RecurringTaskController::class, 'store']);

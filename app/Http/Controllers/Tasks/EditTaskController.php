@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Tasks\TaskRequest;
 use App\Modules\Tasks\Repositories\EditTaskRepository;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class EditTaskController extends Controller
 {
@@ -54,5 +55,26 @@ class EditTaskController extends Controller
         return response([
             'message' => 'Task set as incomplete'
         ]);
+    }
+
+    public function editBucketName(Request $request)
+    {
+        $validated = $request->validate([
+            'old_name' => 'string|required',
+            'new_name' => [
+                'string',
+                'required',
+                Rule::unique('tasks', 'bucket')
+            ]
+        ]);
+
+        try {
+            $this->repository->editBucketName($validated['old_name'], $validated['new_name'], $request->user());
+            return response([
+                'message' => 'Bucket name changed'
+            ]);
+        } catch (\Exception $e) {
+            return response(['message' => $e->getMessage()], 400);
+        }
     }
 }
