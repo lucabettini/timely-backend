@@ -29,7 +29,7 @@ class Task extends Model
     protected $attributes = [
         'completed' => false,
         'tracked' => true,
-        'color' => '#68ba9f',
+        'color' => '68ba9f',
         'description' => null
     ];
 

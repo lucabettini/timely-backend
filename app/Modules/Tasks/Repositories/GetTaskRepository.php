@@ -43,9 +43,11 @@ class GetTaskRepository
 
     public function getWeek(User $user)
     {
-        // This will include also overdue tasks
-        return $user->tasks()->active()
-            ->whereDate('scheduled_for', '<=', Carbon::today()->addDays(7))->get();
+        return $user->tasks()
+            ->whereDate('scheduled_for', '>=', Carbon::today())
+            ->whereDate('scheduled_for', '<=', Carbon::today()->addDays(7))
+            ->oldest('scheduled_for')
+            ->get();
     }
 
     public function getInactiveByArea(User $user, $area)
