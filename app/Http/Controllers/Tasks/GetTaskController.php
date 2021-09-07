@@ -37,7 +37,7 @@ class GetTaskController extends Controller
         $areas = $this->repository->getAreas($request->user());
 
         return response([
-            'areas' => $areas,
+            'data' => $areas,
         ]);
     }
 

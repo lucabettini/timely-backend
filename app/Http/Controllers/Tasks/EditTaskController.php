@@ -64,7 +64,6 @@ class EditTaskController extends Controller
             'new_name' => [
                 'string',
                 'required',
-                Rule::unique('tasks', 'bucket')
             ]
         ]);
 

@@ -19,8 +19,16 @@ class GetTaskRepository
 
     public function getAreas(User $user)
     {
-        $tasks = $user->tasks;
-        return $tasks->pluck('area');
+        $tasks = $user->tasks->groupBy('area');
+
+        $areas_with_buckets = $tasks->map(function ($area) {
+            $buckets = $area->map(function ($task) {
+                return $task['bucket'];
+            });
+            return $buckets->all();
+        });
+
+        return $areas_with_buckets;
     }
 
     public function getOpen(User $user)
@@ -37,7 +45,7 @@ class GetTaskRepository
     {
         // This will include also overdue tasks
         return $user->tasks()->active()
-            ->whereDate('scheduled_for', '<=', Carbon::today()->addDays(7));
+            ->whereDate('scheduled_for', '<=', Carbon::today()->addDays(7))->get();
     }
 
     public function getInactiveByArea(User $user, $area)

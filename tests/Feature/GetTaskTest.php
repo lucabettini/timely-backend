@@ -57,11 +57,17 @@ class GetTaskTest extends TestCase
     {
         $user = User::factory()->create();
         $tasks = Task::factory()->for($user)->count(5)->create();
-        $areas = $tasks->pluck('area');
         $response = $this->actingAs($user)->get("/api/areas");
 
+
+        $areas = $tasks->groupBy('area')->map(function ($area) {
+            $buckets = $area->map(function ($task) {
+                return $task['bucket'];
+            });
+            return $buckets->all();
+        });;
         $response->assertStatus(200)->assertJson([
-            'areas' => $areas->all(),
+            'data' => $areas->all(),
         ]);
     }
 
