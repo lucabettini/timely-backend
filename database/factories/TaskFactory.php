@@ -22,13 +22,13 @@ class TaskFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->sentence(),
-            'bucket' => $this->faker->name(),
-            'area' => $this->faker->name(),
+            'name' => $this->faker->text(40),
+            'bucket' => $this->faker->text(20),
+            'area' => $this->faker->text(20),
             'scheduled_for' => $this->faker->date(),
             'completed' => false,
             'tracked' => true,
-            'color' => '000000'
+            'color' => '#68ba9f'
         ];
     }
 }

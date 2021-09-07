@@ -29,17 +29,17 @@ class TaskRequest extends FormRequest
             'name' => [
                 'required',
                 'string',
-                'max:255',
+                'max:40',
             ],
             'bucket' => [
                 'required',
                 'string',
-                'max:255',
+                'max:20',
             ],
             'area' => [
                 'required',
                 'string',
-                'max:255',
+                'max:20',
             ],
             'description' => [
                 'string',
