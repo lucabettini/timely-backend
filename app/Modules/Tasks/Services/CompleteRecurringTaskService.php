@@ -82,7 +82,7 @@ class CompleteRecurringTaskService
 
             $new_task = $this->edit_task_repository->createTask($values, $user);
 
-            // This will also subtract 1 to occurences_left and set the FK
+            // This will also subtract 1 to occurences_left if specified and set the FK
             $this->recurring_task_repository->addOccurence($new_task, $recurring_task);
         }
     }

@@ -22,7 +22,8 @@ class Task extends Model
         'description',
         'scheduled_for',
         'completed',
-        'color'
+        'color',
+        'tracked'
     ];
 
     // Default attribute values 

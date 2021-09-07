@@ -45,7 +45,9 @@ class RecurringTaskRepository
 
     public function addOccurence(Task $task, RecurringTask $recurring_task)
     {
-        $recurring_task->occurrences_left = $recurring_task->occurrences_left - 1;
+        if (!is_null($recurring_task->occurrences_left)) {
+            $recurring_task->occurrences_left = $recurring_task->occurrences_left - 1;
+        }
         $recurring_task->task()->associate($task);
         $recurring_task->save();
     }
