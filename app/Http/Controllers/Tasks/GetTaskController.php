@@ -62,16 +62,23 @@ class GetTaskController extends Controller
         return TaskResource::collection($tasks);
     }
 
-    public function getInactiveByArea(Request $request, $area)
+    public function getByBucket(Request $request)
     {
-        $tasks = $this->repository->getInactiveByArea($request->user(), $area);
+        $tasks = $this->repository->getByBucket($request->user(), $request->query('area'), $request->query('bucket'));
 
         return TaskResource::collection($tasks);
     }
 
-    public function getActiveByArea(Request $request, $area)
+    public function getInactiveByArea(Request $request)
     {
-        $tasks = $this->repository->getActiveByArea($request->user(), $area);
+        $tasks = $this->repository->getInactiveByArea($request->user(), $request->query('area'));
+
+        return TaskResource::collection($tasks);
+    }
+
+    public function getActiveByArea(Request $request)
+    {
+        $tasks = $this->repository->getActiveByArea($request->user(), $request->query('area'));
 
         return TaskResource::collection($tasks);
     }

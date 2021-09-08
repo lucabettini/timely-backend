@@ -19,16 +19,15 @@ class GetTaskRepository
 
     public function getAreas(User $user)
     {
-        $tasks = $user->tasks->groupBy('area');
-
-        $areas_with_buckets = $tasks->map(function ($area) {
-            $buckets = $area->map(function ($task) {
-                return $task['bucket'];
+        $areas_with_buckets_details = $user->tasks->groupBy('area')->map(function ($area) {
+            return $area->groupBy('bucket')->map(function ($bucket) {
+                return [
+                    'completed' => $bucket->where('completed', true)->count(),
+                    'not_completed' => $bucket->where('completed', false)->count()
+                ];
             });
-            return $buckets->all();
         });
-
-        return $areas_with_buckets;
+        return $areas_with_buckets_details;
     }
 
     public function getOpen(User $user)
@@ -47,6 +46,14 @@ class GetTaskRepository
             ->whereDate('scheduled_for', '>=', Carbon::today())
             ->whereDate('scheduled_for', '<=', Carbon::today()->addDays(7))
             ->oldest('scheduled_for')
+            ->get();
+    }
+
+    public function getByBucket(User $user, $area, $bucket_name)
+    {
+        return $user->tasks()
+            ->where('area', $area)
+            ->where('bucket', $bucket_name)
             ->get();
     }
 
