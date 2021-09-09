@@ -28,7 +28,6 @@ class TaskFactory extends Factory
             'scheduled_for' => $this->faker->date(),
             'completed' => false,
             'tracked' => true,
-            'color' => '68ba9f'
         ];
     }
 }

@@ -77,7 +77,6 @@ class CompleteRecurringTaskService
                 'description' => $task->description,
                 'scheduled_for' => $new_date,
                 'completed' => false,
-                'color'  => $task->color
             ];
 
             $new_task = $this->edit_task_repository->createTask($values, $user);

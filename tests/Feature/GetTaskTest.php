@@ -22,7 +22,6 @@ class GetTaskTest extends TestCase
         "description",
         "scheduled_for",
         "completed",
-        "color",
         "tracked",
         "duration",
         "time_units",

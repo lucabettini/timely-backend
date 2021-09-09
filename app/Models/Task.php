@@ -22,7 +22,6 @@ class Task extends Model
         'description',
         'scheduled_for',
         'completed',
-        'color',
         'tracked'
     ];
 
@@ -30,7 +29,6 @@ class Task extends Model
     protected $attributes = [
         'completed' => false,
         'tracked' => true,
-        'color' => '68ba9f',
         'description' => null
     ];
 

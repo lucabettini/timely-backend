@@ -73,14 +73,11 @@ class EditTaskController extends Controller
 
     public function deleteByBucket(Request $request)
     {
-        try {
-            $this->repository->deleteByBucket($request->query('bucket'), $request->query('area'), $request->user());
-            return response([
-                'message' => 'Bucket deleted successfully'
-            ]);
-        } catch (\Exception $e) {
-            return response(['message' => $e->getMessage()], 400);
-        }
+
+        $this->repository->deleteByBucket($request->query('bucket'), $request->query('area'), $request->user());
+        return response([
+            'message' => 'Bucket deleted successfully'
+        ]);
     }
 
     public function editAreaName(Request $request)

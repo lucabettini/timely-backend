@@ -48,7 +48,6 @@ class TaskRequest extends FormRequest
             ],
             'scheduled_for' => ['required', 'date'],
             'completed' => ['boolean', 'nullable'],
-            'color' => ['string', 'max:6', 'nullable']
         ];
     }
 }
