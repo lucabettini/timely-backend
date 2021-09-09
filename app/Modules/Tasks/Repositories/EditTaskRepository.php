@@ -34,19 +34,29 @@ class EditTaskRepository
         $task->save();
     }
 
-    public function editBucketName($old_name, $new_name, User $user)
+    public function editBucketName($old_name, $new_name, $area, User $user)
     {
         DB::table('tasks')
             ->where('user_id', $user->id)
             ->where('bucket', $old_name)
+            ->where('area', $area)
             ->update(['bucket' => $new_name]);
     }
 
-    public function deleteByBucket($bucket, User $user)
+    public function deleteByBucket($bucket, $area, User $user)
     {
         DB::table('tasks')
             ->where('user_id', $user->id)
+            ->where('area', $area)
             ->where('bucket', $bucket)
             ->delete();
+    }
+
+    public function editAreaName($old_name, $new_name, User $user)
+    {
+        DB::table('tasks')
+            ->where('user_id', $user->id)
+            ->where('area', $old_name)
+            ->update(['area' => $new_name]);
     }
 }

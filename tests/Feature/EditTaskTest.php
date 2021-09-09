@@ -85,11 +85,13 @@ class EditTaskTest extends TestCase
     {
         $user = User::factory()->create();
         $task = Task::factory()->for($user)->state([
-            'bucket' => 'someName'
+            'bucket' => 'someName',
+            'area' => 'someArea'
         ])->create();
         $values = [
             'old_name' => 'someName',
-            'new_name' => 'anotherName'
+            'new_name' => 'anotherName',
+            'area' => 'someArea'
         ];
 
         $response = $this->actingAs($user)->patchJson("/api/bucket", $values);
@@ -104,13 +106,12 @@ class EditTaskTest extends TestCase
     public function test_delete_by_bucket()
     {
         $user = User::factory()->create();
-        $task = Task::factory()->for($user)->state([
+        Task::factory()->for($user)->state([
+            'area' => 'someArea',
             'bucket' => 'someName'
         ])->create();
 
-        $response = $this->actingAs($user)->deleteJson("/api/bucket", [
-            'bucket' => 'someName'
-        ]);
+        $response = $this->actingAs($user)->deleteJson("/api/bucket/?area=someArea&bucket=someBucket");
 
         $response->assertStatus(200)->assertJson([
             'message' => 'Bucket deleted successfully'

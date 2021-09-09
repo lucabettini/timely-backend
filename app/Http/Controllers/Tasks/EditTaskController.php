@@ -60,36 +60,39 @@ class EditTaskController extends Controller
     public function editBucketName(Request $request)
     {
         $validated = $request->validate([
-            'old_name' => 'string|required',
-            'new_name' => [
-                'string',
-                'required',
-            ]
+            'old_name' => 'string|required|exists:tasks,bucket',
+            'new_name' => 'string|required',
+            'area' => 'string|required|exists:tasks,area',
         ]);
 
+        $this->repository->editBucketName($validated['old_name'], $validated['new_name'], $validated['area'], $request->user());
+        return response([
+            'message' => 'Bucket name changed'
+        ]);
+    }
+
+    public function deleteByBucket(Request $request)
+    {
         try {
-            $this->repository->editBucketName($validated['old_name'], $validated['new_name'], $request->user());
+            $this->repository->deleteByBucket($request->query('bucket'), $request->query('area'), $request->user());
             return response([
-                'message' => 'Bucket name changed'
+                'message' => 'Bucket deleted successfully'
             ]);
         } catch (\Exception $e) {
             return response(['message' => $e->getMessage()], 400);
         }
     }
 
-    public function deleteByBucket(Request $request)
+    public function editAreaName(Request $request)
     {
         $validated = $request->validate([
-            'bucket' => [
-                'string',
-                'required',
-                'exists:tasks,bucket'
-            ]
+            'old_name' => 'string|required|exists:tasks,area',
+            'new_name' => 'string|required',
         ]);
 
-        $this->repository->deleteByBucket($validated['bucket'], $request->user());
+        $this->repository->editAreaName($validated['old_name'], $validated['new_name'], $request->user());
         return response([
-            'message' => 'Bucket deleted successfully'
+            'message' => 'Area name changed'
         ]);
     }
 }
