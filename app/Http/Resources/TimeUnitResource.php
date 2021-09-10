@@ -16,6 +16,7 @@ class TimeUnitResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'task_id' => $this->task_id,
             'start_time' => $this->start_time,
             'end_time' => $this->end_time,
             'duration' => $this->duration

@@ -24,7 +24,6 @@ class TaskResource extends JsonResource
             'scheduled_for' => $this->scheduled_for,
             'completed' => $this->completed,
             'tracked' => $this->tracked,
-            'color' => $this->color,
             'duration' => $this->duration,
             'time_units' => $this->timeUnitsCount,
             'recurring' => new RecurringTaskResource($this->recurring)

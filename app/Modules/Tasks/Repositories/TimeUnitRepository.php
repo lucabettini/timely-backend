@@ -4,9 +4,16 @@ namespace App\Modules\Tasks\Repositories;
 
 use App\Models\Task;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class TimeUnitRepository
 {
+    public function getStarted(User $user)
+    {
+        return $user->time_units()->firstWhere('end_time', '=', null);
+    }
+
+
     public function createTimeUnit($values, $task_id, User $user)
     {
         $task = $user->tasks()->findOrFail($task_id);

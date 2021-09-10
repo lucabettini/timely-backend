@@ -50,7 +50,8 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/tasks/{id}/recurring', [RecurringTaskController::class, 'destroy']);
     Route::patch('/tasks/{id}/recurring/complete', [RecurringTaskController::class, 'complete']);
 
-    Route::post('/tasks/{task_id}/time-unit', [TimeUnitController::class, 'store']);
-    Route::put('/time_units/{id}', [TimeUnitController::class, 'update']);
-    Route::delete('/time_units/{id}', [TimeUnitController::class, 'destroy']);
+    Route::get('/time_unit', [TimeUnitController::class, 'getStarted']);
+    Route::post('/tasks/{task_id}/time_unit', [TimeUnitController::class, 'store']);
+    Route::put('/time_unit/{id}', [TimeUnitController::class, 'update']);
+    Route::delete('/time_unit/{id}', [TimeUnitController::class, 'destroy']);
 });

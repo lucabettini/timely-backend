@@ -42,11 +42,6 @@ class TimeUnit extends Model
         return $query->whereNotNull('end_time')->whereNotNull('start_time');
     }
 
-    public function scopeUntracked($query)
-    {
-        return $query->whereNull('start_time');
-    }
-
 
     //-----------//
     // ACCESSORS // 
@@ -56,7 +51,7 @@ class TimeUnit extends Model
         if ($this->end_time and $this->start_time) {
             return $this->start_time->diffInSeconds($this->end_time);
         } else {
-            return 'null';
+            return null;
         }
     }
 

@@ -16,7 +16,7 @@ class CreateTimeUnitsTable extends Migration
         Schema::create('time_units', function (Blueprint $table) {
             $table->id();
             $table->foreignId('task_id')->constrained()->onDelete('cascade');
-            $table->dateTime('start_time')->nullable();
+            $table->dateTime('start_time');
             $table->dateTime('end_time')->nullable();
         });
     }
