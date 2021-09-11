@@ -22,7 +22,7 @@ class TimeUnitController extends Controller
         if ($time_unit) {
             return new TimeUnitResource($time_unit);
         } else {
-            return response(null, 200);
+            return response(['data' => ['message' => 'No active time units']], 200);
         }
     }
 

@@ -23,7 +23,6 @@ class CreateUserService
             $name,
             $email,
             Hash::make($password),
-            // $timezone
         );
 
         return $this->service->create($email);

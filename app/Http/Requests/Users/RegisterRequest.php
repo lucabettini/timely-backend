@@ -32,7 +32,6 @@ class RegisterRequest extends FormRequest
                 'confirmed',
                 RulesPassword::min(8)->letters()->numbers()
             ],
-            // 'timezone' => 'max:255'
         ];
     }
 }

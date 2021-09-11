@@ -18,7 +18,6 @@ class UserRepository
             'name' => $name,
             'email' => $email,
             'password' => $hashed_password,
-            // 'timezone' => $request->timezone
         ]);
     }
 
