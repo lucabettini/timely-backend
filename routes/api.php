@@ -30,20 +30,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tasks/open', [GetTaskController::class, 'getOpen']);
     Route::get('/tasks/overdue', [GetTaskController::class, 'getOverdue']);
     Route::get('/tasks/week', [GetTaskController::class, 'getWeek']);
-    // Route::get('tasks/archive', [GetTaskController::class, 'getInactiveByArea']);
-    Route::get('tasks/bucket', [GetTaskController::class, 'getByBucket']);
-    // Route::get('tasks/active', [GetTaskController::class, 'getActiveByArea']);
     Route::get('/tasks/{id}', [GetTaskController::class, 'getById']);
-    Route::get('/areas', [GetTaskController::class, 'getAreas']);
 
     Route::post('/tasks', [EditTaskController::class, 'store']);
     Route::patch('/tasks/{id}/complete', [EditTaskController::class, 'complete']);
     Route::patch('/tasks/{id}/incomplete', [EditTaskController::class, 'makeIncomplete']);
     Route::put('/tasks/{id}', [EditTaskController::class, 'update']);
     Route::delete('/tasks/{id}', [EditTaskController::class, 'destroy']);
+
+
+    Route::get('/areas', [GetTaskController::class, 'getAreas']);
+    Route::get('/area', [GetTaskController::class, 'getArea']);
+    Route::get('/bucket', [GetTaskController::class, 'getByBucket']);
+    Route::patch('/area', [EditTaskController::class, 'editAreaName']);
     Route::patch('/bucket', [EditTaskController::class, 'editBucketName']);
     Route::delete('/bucket', [EditTaskController::class, 'deleteByBucket']);
-    Route::patch('/area', [EditTaskController::class, 'editAreaName']);
+
 
     Route::post('/tasks/{id}/recurring', [RecurringTaskController::class, 'store']);
     Route::put('/tasks/{id}/recurring', [RecurringTaskController::class, 'update']);

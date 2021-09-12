@@ -17,19 +17,6 @@ class GetTaskRepository
         return $user->tasks;
     }
 
-    public function getAreas(User $user)
-    {
-        $areas_with_buckets_details = $user->tasks->groupBy('area')->map(function ($area) {
-            return $area->groupBy('bucket')->map(function ($bucket) {
-                return [
-                    'completed' => $bucket->where('completed', true)->count(),
-                    'not_completed' => $bucket->where('completed', false)->count()
-                ];
-            });
-        });
-        return $areas_with_buckets_details;
-    }
-
     public function getOpen(User $user)
     {
         return $user->tasks()->active()->tracked()->get();
@@ -49,21 +36,29 @@ class GetTaskRepository
             ->get();
     }
 
+    public function getAreas(User $user)
+    {
+        return $user->tasks->pluck('area')->unique();
+    }
+
+    public function getArea(User $user, $area)
+    {
+        return $user->tasks
+            ->where('area', $area)
+            ->groupBy('bucket')
+            ->map(function ($bucket) {
+                return [
+                    'completed' => $bucket->where('completed', true)->count(),
+                    'not_completed' => $bucket->where('completed', false)->count()
+                ];
+            });
+    }
+
     public function getByBucket(User $user, $area, $bucket_name)
     {
         return $user->tasks()
             ->where('area', $area)
             ->where('bucket', $bucket_name)
             ->get();
-    }
-
-    public function getInactiveByArea(User $user, $area)
-    {
-        return $user->tasks()->where('completed', true)->where('area', $area)->get();
-    }
-
-    public function getActiveByArea(User $user, $area)
-    {
-        return $user->tasks()->active()->where('area', $area)->get();
     }
 }

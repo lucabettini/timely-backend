@@ -81,6 +81,26 @@ class EditTaskTest extends TestCase
         ]);
     }
 
+    public function test_edit_area_name()
+    {
+        $user = User::factory()->create();
+        $task = Task::factory()->for($user)->state([
+            'area' => 'someArea'
+        ])->create();
+        $values = [
+            'old_name' => 'someArea',
+            'new_name' => 'anotherName',
+        ];
+
+        $response = $this->actingAs($user)->patchJson("/api/area", $values);
+        $task->refresh();
+
+        $this->assertEquals('anotherName', $task->area);
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Area name changed'
+        ]);
+    }
+
     public function test_edit_bucket_name()
     {
         $user = User::factory()->create();

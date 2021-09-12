@@ -32,15 +32,6 @@ class GetTaskController extends Controller
         return response($task);
     }
 
-    public function getAreas(Request $request)
-    {
-        $areas = $this->repository->getAreas($request->user());
-
-        return response([
-            'data' => $areas,
-        ]);
-    }
-
     public function getOpen(Request $request)
     {
         $tasks = $this->repository->getOpen($request->user());
@@ -62,23 +53,27 @@ class GetTaskController extends Controller
         return TaskResource::collection($tasks);
     }
 
+    public function getAreas(Request $request)
+    {
+        $areas = $this->repository->getAreas($request->user());
+
+        return response([
+            'data' => $areas,
+        ]);
+    }
+
+    public function getArea(Request $request)
+    {
+        $area = $this->repository->getArea($request->user(), $request->query('area'));
+
+        return response([
+            'data' => $area
+        ]);
+    }
+
     public function getByBucket(Request $request)
     {
         $tasks = $this->repository->getByBucket($request->user(), $request->query('area'), $request->query('bucket'));
-
-        return TaskResource::collection($tasks);
-    }
-
-    public function getInactiveByArea(Request $request)
-    {
-        $tasks = $this->repository->getInactiveByArea($request->user(), $request->query('area'));
-
-        return TaskResource::collection($tasks);
-    }
-
-    public function getActiveByArea(Request $request)
-    {
-        $tasks = $this->repository->getActiveByArea($request->user(), $request->query('area'));
 
         return TaskResource::collection($tasks);
     }
