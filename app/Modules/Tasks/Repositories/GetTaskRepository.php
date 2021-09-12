@@ -38,7 +38,7 @@ class GetTaskRepository
 
     public function getAreas(User $user)
     {
-        return $user->tasks->pluck('area')->unique();
+        return $user->tasks->pluck('area')->unique()->values();
     }
 
     public function getArea(User $user, $area)
