@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\RevokedToken;
 use App\Models\User;
 use Carbon\Carbon;
+use Exception;
 use Firebase\JWT\JWT;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -39,8 +40,13 @@ class AuthServiceProvider extends ServiceProvider
             if (!$jwt) return null;
 
             // Decode the token 
-            $secret = env('JWT_SECRET');
-            $token = JWT::decode($jwt, $secret, array('HS256'));
+            try {
+                $secret = env('JWT_SECRET');
+                $token = JWT::decode($jwt, $secret, array('HS256'));
+            } catch (Exception $e) {
+                return null;
+            }
+
 
             // Check if token is valid
             $issuead_at = Carbon::createFromTimestampUTC($token->iat);
