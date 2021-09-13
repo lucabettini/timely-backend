@@ -4,6 +4,7 @@ namespace App\Modules\Users\Services;
 
 use DateTime;
 use Firebase\JWT\JWT;
+use Webpatser\Uuid\Uuid;
 
 class TokenService
 {
@@ -26,7 +27,8 @@ class TokenService
 
         $payload = array(
             "iat" => $this->getDate(),
-            "user" => $email
+            "user" => $email,
+            "jti" => Uuid::generate()->string
         );
         $jwt = JWT::encode($payload, $this->secret);
 

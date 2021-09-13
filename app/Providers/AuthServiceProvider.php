@@ -2,12 +2,14 @@
 
 namespace App\Providers;
 
+use App\Models\RevokedToken;
 use App\Models\User;
 use Carbon\Carbon;
 use Firebase\JWT\JWT;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -46,10 +48,15 @@ class AuthServiceProvider extends ServiceProvider
                 return null;
             }
 
-            // TODO: Check if token is present on blacklist
+            // Check if token is present on blacklist
+            $blacklist = RevokedToken::where('token', $token->jti)->get();
+            if ($blacklist->isEmpty()) {
+                // Retrieve and return the correct user 
+                return User::where('email', $token->user)->first();
+            }
 
-            // Retrieve and return the correct user 
-            return User::where('email', $token->user)->first();
+
+            return null;
         });
     }
 }

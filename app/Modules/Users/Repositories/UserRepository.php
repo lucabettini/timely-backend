@@ -2,6 +2,7 @@
 
 namespace App\Modules\Users\Repositories;
 
+use App\Models\RevokedToken;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
@@ -24,5 +25,12 @@ class UserRepository
     public function isSamePassword($password, $hashed_password)
     {
         return Hash::check($password, $hashed_password);
+    }
+
+    public function addTokenToBlacklist($token)
+    {
+        RevokedToken::create([
+            'token' => $token
+        ]);
     }
 }
