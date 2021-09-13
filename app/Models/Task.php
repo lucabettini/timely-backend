@@ -81,7 +81,7 @@ class Task extends Model
 
     public function scopeOverdue($query)
     {
-        return $query->active()->whereDate('scheduled_for', '<=', Carbon::today());
+        return $query->active()->whereDate('scheduled_for', '<', Carbon::today());
     }
 
     //---------------//
