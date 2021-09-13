@@ -6,6 +6,7 @@ use App\Http\Controllers\Tasks\RecurringTaskController;
 use App\Http\Controllers\Tasks\TimeUnitController;
 use App\Http\Controllers\Users\LoginController;
 use App\Http\Controllers\Users\LogoutController;
+use App\Http\Controllers\Users\PasswordController;
 use App\Http\Controllers\Users\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -24,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 // PUBLIC ROUTES
 Route::post('/register', [RegisterController::class, 'store']);
 Route::post('/login', [LoginController::class, 'store']);
-Route::post('/logout', [LogoutController::class, 'store']);
+
 
 // PROTECTED ROUTES 
 Route::middleware(['auth'])->group(function () {
@@ -58,4 +59,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/tasks/{task_id}/time_unit', [TimeUnitController::class, 'store']);
     Route::put('/time_unit/{id}', [TimeUnitController::class, 'update']);
     Route::delete('/time_unit/{id}', [TimeUnitController::class, 'destroy']);
+
+    Route::post('/logout', [LogoutController::class, 'store']);
+    Route::post('/changePassword', [PasswordController::class, 'change']);
 });

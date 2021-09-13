@@ -22,6 +22,14 @@ class UserRepository
         ]);
     }
 
+    public function changePassword($new_password, $user_id)
+    {
+        $current_user = User::find($user_id);
+        $current_user->update([
+            'password' => Hash::make($new_password),
+        ]);
+    }
+
     public function isSamePassword($password, $hashed_password)
     {
         return Hash::check($password, $hashed_password);

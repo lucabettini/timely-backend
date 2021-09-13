@@ -96,8 +96,20 @@ class UserTest extends TestCase
         $response->assertStatus(200)->assertJson([
             'message' => 'Logout successfull'
         ]);
+    }
 
-        $protected_request = $this->get('/api/tasks', ['jwt' => $token]);
-        $protected_request->assertStatus(401);
+    public function test_change_password()
+    {
+        $user = User::factory()->create();
+
+        $response = $this->actingAs($user)->postJson('/api/changePassword', [
+            'old_password' => 'Abc123456', //used in UserFactory
+            'password' => 'Abc1234567',
+            'password_confirmation' => 'Abc1234567'
+        ]);
+
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Password changed'
+        ]);
     }
 }
