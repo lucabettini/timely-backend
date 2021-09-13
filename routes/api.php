@@ -33,6 +33,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tasks', [GetTaskController::class, 'getAll']);
     Route::get('/tasks/open', [GetTaskController::class, 'getOpen']);
     Route::get('/tasks/overdue', [GetTaskController::class, 'getOverdue']);
+    Route::get('/tasks/today', [GetTaskController::class, 'getToday']);
+    Route::get('/tasks/tomorrow', [GetTaskController::class, 'getTomorrow']);
     Route::get('/tasks/week', [GetTaskController::class, 'getWeek']);
     Route::get('/tasks/{id}', [GetTaskController::class, 'getById']);
 

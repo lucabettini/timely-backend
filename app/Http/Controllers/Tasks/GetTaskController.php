@@ -46,6 +46,20 @@ class GetTaskController extends Controller
         return TaskResource::collection($tasks);
     }
 
+    public function getToday(Request $request)
+    {
+        $tasks = $this->repository->getToday($request->user());
+
+        return TaskResource::collection($tasks);
+    }
+
+    public function getTomorrow(Request $request)
+    {
+        $tasks = $this->repository->getTomorrow($request->user());
+
+        return TaskResource::collection($tasks);
+    }
+
     public function getWeek(Request $request)
     {
         $tasks = $this->repository->getWeek($request->user());

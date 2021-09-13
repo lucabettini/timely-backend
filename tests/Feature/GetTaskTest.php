@@ -72,8 +72,59 @@ class GetTaskTest extends TestCase
             'completed' => true
         ]);
 
-        $received_date = new DateTime($response['data'][0]['scheduled_for']);
-        $this->assertLessThan(Carbon::today()->getTimestamp(), $received_date->getTimestamp());
+        foreach ($response['data'] as $task) {
+            $received_date = new DateTime($task['scheduled_for']);
+            $this->assertLessThan(Carbon::today()->getTimestamp(), $received_date->getTimestamp());
+        }
+    }
+
+    public function test_get_today()
+    {
+        $user = User::factory()->create();
+        Task::factory()->for($user)->count(5)->create([
+            'scheduled_for' => Carbon::today()
+        ]);
+        $response = $this->actingAs($user)->get("/api/tasks/today");
+
+        $response->assertStatus(200);
+        foreach ($response['data'] as $task) {
+            $received_date = new DateTime($task['scheduled_for']);
+            $this->assertEquals(Carbon::today()->getTimestamp(), $received_date->getTimestamp());
+        }
+    }
+
+    public function test_get_tomorrow()
+    {
+        $user = User::factory()->create();
+        Task::factory()->for($user)->count(5)->create([
+            'scheduled_for' => Carbon::tomorrow()
+        ]);
+        $response = $this->actingAs($user)->get("/api/tasks/tomorrow");
+
+        $response->assertStatus(200);
+        foreach ($response['data'] as $task) {
+            $received_date = new DateTime($task['scheduled_for']);
+            $this->assertEquals(Carbon::tomorrow()->getTimestamp(), $received_date->getTimestamp());
+        }
+    }
+
+    public function test_get_week()
+    {
+        $user = User::factory()->create();
+        Task::factory()->for($user)->count(5)->create([
+            'scheduled_for' => Carbon::today()->addDays(3)
+        ]);
+        Task::factory()->for($user)->count(5)->create([
+            'scheduled_for' => Carbon::today()->addDays(9)
+        ]);
+        $response = $this->actingAs($user)->get("/api/tasks/week");
+
+        $response->assertStatus(200);
+        foreach ($response['data'] as $task) {
+            $received_date = new DateTime($task['scheduled_for']);
+            $this->assertLessThan(Carbon::today()->addDays(7)->getTimestamp(), $received_date->getTimestamp());
+            $this->assertGreaterThanOrEqual(Carbon::today()->getTimestamp(), $received_date->getTimestamp());
+        }
     }
 
     public function test_get_areas()

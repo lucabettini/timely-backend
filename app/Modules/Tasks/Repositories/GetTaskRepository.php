@@ -27,6 +27,20 @@ class GetTaskRepository
         return $user->tasks()->active()->overdue()->get();
     }
 
+    public function getToday(User $user)
+    {
+        return $user->tasks()
+            ->whereDate('scheduled_for', Carbon::today())
+            ->get();
+    }
+
+    public function getTomorrow(User $user)
+    {
+        return $user->tasks()
+            ->whereDate('scheduled_for', Carbon::tomorrow())
+            ->get();
+    }
+
     public function getWeek(User $user)
     {
         return $user->tasks()
