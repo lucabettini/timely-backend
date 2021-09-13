@@ -5,6 +5,7 @@ namespace App\Modules\Users\Repositories;
 use App\Models\RevokedToken;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class UserRepository
 {
@@ -27,6 +28,28 @@ class UserRepository
         $current_user = User::find($user_id);
         $current_user->update([
             'password' => Hash::make($new_password),
+        ]);
+    }
+
+    public function resetPassword($request)
+    {
+        return Password::reset(
+            // If the entered data are valid, the closure is invoked
+            $request->only('email', 'password', 'password_confirmation', 'token'),
+            function ($user, $password) use ($request) {
+                $user->forceFill([
+                    'password' => Hash::make($password)
+                ]);
+                $user->save();
+            }
+        );
+    }
+
+    public function editAccount($name, $email, User $user)
+    {
+        $user->update([
+            'name' => $name,
+            'email' => $email
         ]);
     }
 

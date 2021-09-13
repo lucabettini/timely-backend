@@ -4,6 +4,7 @@ use App\Http\Controllers\Tasks\EditTaskController;
 use App\Http\Controllers\Tasks\GetTaskController;
 use App\Http\Controllers\Tasks\RecurringTaskController;
 use App\Http\Controllers\Tasks\TimeUnitController;
+use App\Http\Controllers\Users\AccountController;
 use App\Http\Controllers\Users\LoginController;
 use App\Http\Controllers\Users\LogoutController;
 use App\Http\Controllers\Users\PasswordController;
@@ -62,4 +63,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/logout', [LogoutController::class, 'store']);
     Route::post('/changePassword', [PasswordController::class, 'change']);
+    Route::post('/forgotPassword', [PasswordController::class, 'forgot']);
+    Route::get('/reset-password/{token}', [PasswordController::class, 'reset'])->name('password.reset');
+    Route::patch('/editAccount', [AccountController::class, 'update']);
+    Route::delete('/deleteAccount', [AccountController::class, 'destroy']);
 });

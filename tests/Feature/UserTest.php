@@ -112,4 +112,47 @@ class UserTest extends TestCase
             'message' => 'Password changed'
         ]);
     }
+
+    public function test_forgot_password()
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->postJson('/api/forgotPassword', [
+            'email' => $user->email
+        ]);
+
+        $response->assertStatus(200)->assertJson([
+            'message' => 'Reset link sent'
+        ]);
+    }
+
+    public function test_update_account()
+    {
+        $user = User::factory()->create();
+        $response = $this->actingAs($user)->patchJson('/api/editAccount', [
+            'email' => 'anotheremail@example.com',
+            'name' => 'anothername',
+            'password' => 'Abc123456' //used in UserFactory
+        ]);
+
+        $response->assertStatus(200)->assertJson([
+            'message' => 'User updated successfully'
+        ]);
+    }
+
+    public function test_delete_account()
+    {
+        User::factory()->create([
+            'email' => 'johndoe@gmail.com',
+        ]);
+        $login = $this->postJson('/api/login', [
+            'email' => 'johndoe@gmail.com',
+            'password' => 'Abc123456'
+        ]);
+        $token = $login->headers->all()['jwt'][0];
+        $response = $this->deleteJson('/api/deleteAccount', [], ['jwt' => $token]);
+
+        $response->assertStatus(200)->assertJson([
+            'message' => 'User deleted successfully'
+        ]);
+    }
 }
