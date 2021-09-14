@@ -26,6 +26,8 @@ use Illuminate\Support\Facades\Route;
 // PUBLIC ROUTES
 Route::post('/register', [RegisterController::class, 'store']);
 Route::post('/login', [LoginController::class, 'store']);
+Route::post('/forgotPassword', [PasswordController::class, 'forgot']);
+Route::get('/reset-password/{token}', [PasswordController::class, 'reset'])->name('password.reset');
 
 
 // PROTECTED ROUTES 
@@ -65,8 +67,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/logout', [LogoutController::class, 'store']);
     Route::post('/changePassword', [PasswordController::class, 'change']);
-    Route::post('/forgotPassword', [PasswordController::class, 'forgot']);
-    Route::get('/reset-password/{token}', [PasswordController::class, 'reset'])->name('password.reset');
     Route::patch('/editAccount', [AccountController::class, 'update']);
     Route::delete('/deleteAccount', [AccountController::class, 'destroy']);
 });

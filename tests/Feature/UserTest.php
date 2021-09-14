@@ -116,7 +116,7 @@ class UserTest extends TestCase
     public function test_forgot_password()
     {
         $user = User::factory()->create();
-        $response = $this->actingAs($user)->postJson('/api/forgotPassword', [
+        $response = $this->postJson('/api/forgotPassword', [
             'email' => $user->email
         ]);
 
