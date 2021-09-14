@@ -1,7 +1,7 @@
 # [TIMELY](https://time-ly.netlify.app)
 You are viewing the server side code. Client side repo is available [here](https://github.com/lucabettini/timely-client). 
 
-<hr>
+<br>
 
 This API was created as a personal project in September 2021. Built with Laravel 8, it's a completely RESTful API with JWT authentication that provides endpoints to perform all basics CRUD operations on different types of tasks, behaving like a digital time tracker (like [Toggl](https://toggl.com/track/toggl-desktop/)) and schedule manager (like [TickTick](https://www.ticktick.com/)). 
 
@@ -64,46 +64,35 @@ When a task marked as recurring is completed, a new one is created with a differ
 
 Below is a simple schema of endpoints pertaining to tasks, recurring tasks and time units: 
 
-|        | ROUTE               | ACTION                          |
-| ------ | ------------------- | ------------------------------- |
-| GET    | /tasks            | Get all tasks       |
-| GET    | /tasks/open       | Get incomplete tracked tasks |
-| GET    | /tasks/overdue    | Get all incomplete tasks with due date in the past |
-| GET    | /tasks/today      | Get all tasks with due date today |
-| GET    | /tasks/tomorrow      | Get all tasks with due date tomorrow |
-| GET    | /tasks/week      | Get all tasks with due date in the next 7 days |
-| GET    | /tasks/{id}      | Get a single task with full infos and all time units |
+|        | ROUTE               | ACTION                          | CONTROLLER   |
+| ------ | ------------------- | ------------------------------- | ----------   |
+| GET    | /tasks            | Get all tasks       | [GetTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/GetTaskController.php) |
+| GET    | /tasks/open       | Get incomplete tracked tasks | [GetTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/GetTaskController.php) |
+| GET    | /tasks/overdue    | Get all incomplete tasks with due date in the past | [GetTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/GetTaskController.php) |
+| GET    | /tasks/today      | Get all tasks with due date today | [GetTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/GetTaskController.php) |
+| GET    | /tasks/tomorrow      | Get all tasks with due date tomorrow | [GetTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/GetTaskController.php) |
+| GET    | /tasks/week      | Get all tasks with due date in the next 7 days | [GetTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/GetTaskController.php) |
+| GET    | /tasks/{id}      | Get a single task with full infos and all time units | [GetTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/GetTaskController.php) |
+| GET   | /areas      | Get a list of areas names | [GetTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/GetTaskController.php) |
+| GET   | /area/{area}      | Get infos about an area | [GetTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/GetTaskController.php) |
+| GET   | /area/{area}/bucket/{bucket}      | Get all tasks inside a bucket | [GetTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/GetTaskController.php) |
+| PATCH   | /area      | Change area name | [EditTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/EditTaskController.php) |
+| PATCH   | /bucket      | Edit bucket name | [EditTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/EditTaskController.php) |
+| DELETE   | /bucket      | Delete all tasks inside a bucket | [EditTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/EditTaskController.php) |
+| POST    | /tasks            | Add task       | [EditTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/EditTaskController.php) |
+| PATCH   | /tasks/{id}/complete      | Mark task as completed | [EditTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/EditTaskController.php) |
+| PATCH   | /tasks/{id}/incomplete      |Mark task as not completed | [EditTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/EditTaskController.php) |
+| PUT    | /tasks/{id}    | Edit task | [EditTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/EditTaskController.php) |
+| DELETE    | /tasks/{id}      | Delete task | [EditTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/EditTaskController.php) |
+| POST    | /tasks/{id}/recurring            | Add recurring task       | [RecurringTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/RecurringTaskController.php) |
+| PATCH   | /tasks/{id}/complete      | Complete recurring task | [RecurringTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/RecurringTaskController.php) |
+| PUT    | /tasks/{id}/recurring    | Edit recurring task | [RecurringTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/RecurringTaskController.php) |
+| DELETE    | /tasks/{id}/recurring      | Delete recurring task | [RecurringTaskController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/RecurringTaskController.php) |
+| GET   | /time_unit/{id}      | Get started time unit | [TimeUnitController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/TimeUnitController.php) |
+| POST    | /tasks/{task_id}/time_unit            | Add time unit       | [TimeUnitController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/TimeUnitController.php) |
+| PUT    | /time_unit/{id}    | Edit time unit | [TimeUnitController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/TimeUnitController.php) |
+| DELETE    | /time_unit/{id}     | Delete time unit | [TimeUnitController](https://github.com/lucabettini/timely-backend/blob/main/app/Http/Controllers/Tasks/TimeUnitController.php) |
 
-|        | ROUTE               | ACTION                          |
-| ------ | ------------------- | ------------------------------- |
-| POST    | /tasks            | Add task       |
-| PATCH   | /tasks/{id}/complete      | Mark task as completed |
-| PATCH   | /tasks/{id}/incomplete      |Mark task as not completed |
-| PUT    | /tasks/{id}    | Edit task |
-| DELETE    | /tasks/{id}      | Delete task |
-
-|        | ROUTE               | ACTION                          |
-| ------ | ------------------- | ------------------------------- |
-| POST    | /tasks/{id}/recurring            | Add recurring task       |
-| PATCH   | /tasks/{id}/complete      | Complete recurring task |
-| PUT    | /tasks/{id}/recurring    | Edit recurring task |
-| DELETE    | /tasks/{id}/recurring      | Delete recurring task |
-
-|        | ROUTE               | ACTION                          |
-| ------ | ------------------- | ------------------------------- |
-| GET   | /time_unit/{id}      | Get started time unit |
-| POST    | /tasks/{task_id}/time_unit            | Add time unit       |
-| PUT    | /time_unit/{id}    | Edit time unit |
-| DELETE    | /time_unit/{id}     | Delete time unit |
-
-|        | ROUTE               | ACTION                          |
-| ------ | ------------------- | ------------------------------- |
-| GET   | /areas      | Get a list of areas names |
-| GET   | /area/{area}      | Get infos about an area |
-| GET   | /area/{area}/bucket/{bucket}      | Get all tasks inside a bucket |
-| PATCH   | /area      | Change area name |
-| PATCH   | /bucket      | Edit bucket name |
-| DELETE   | /bucket      | Delete all tasks inside a bucket |
 
 
 <br>
