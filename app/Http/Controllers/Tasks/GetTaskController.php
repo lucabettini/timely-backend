@@ -76,18 +76,18 @@ class GetTaskController extends Controller
         ]);
     }
 
-    public function getArea(Request $request)
+    public function getArea(Request $request, $area_param)
     {
-        $area = $this->repository->getArea($request->user(), $request->query('area'));
+        $area = $this->repository->getArea($request->user(), $area_param);
 
         return response([
             'data' => $area
         ]);
     }
 
-    public function getByBucket(Request $request)
+    public function getByBucket(Request $request, $area, $bucket)
     {
-        $tasks = $this->repository->getByBucket($request->user(), $request->query('area'), $request->query('bucket'));
+        $tasks = $this->repository->getByBucket($request->user(), $area, $bucket);
 
         return TaskResource::collection($tasks);
     }

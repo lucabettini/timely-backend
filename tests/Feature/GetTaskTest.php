@@ -159,7 +159,7 @@ class GetTaskTest extends TestCase
         Task::factory()->for($user)->count(3)->create([
             'area' => 'area2',
         ]);
-        $response = $this->actingAs($user)->get("/api/area/?area=area1");
+        $response = $this->actingAs($user)->get("/api/area/area1");
 
         $response->assertStatus(200)->assertJson([
             'data' => [
@@ -183,7 +183,7 @@ class GetTaskTest extends TestCase
             'area' => 'area1',
             'bucket' => 'bucket1',
         ]);
-        $response = $this->actingAs($user)->get('/api/bucket/?area=area1&bucket=bucket1');
+        $response = $this->actingAs($user)->get('/api/area/area1/bucket/bucket1');
 
         $response->assertStatus(200)
             ->assertJsonStructure([

@@ -46,8 +46,8 @@ Route::middleware(['auth'])->group(function () {
 
 
     Route::get('/areas', [GetTaskController::class, 'getAreas']);
-    Route::get('/area', [GetTaskController::class, 'getArea']);
-    Route::get('/bucket', [GetTaskController::class, 'getByBucket']);
+    Route::get('/area/{area}', [GetTaskController::class, 'getArea']);
+    Route::get('/area/{area}/bucket/{bucket}', [GetTaskController::class, 'getByBucket']);
     Route::patch('/area', [EditTaskController::class, 'editAreaName']);
     Route::patch('/bucket', [EditTaskController::class, 'editBucketName']);
     Route::delete('/bucket', [EditTaskController::class, 'deleteByBucket']);
