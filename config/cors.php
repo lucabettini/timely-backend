@@ -25,9 +25,9 @@ return [
 
     'allowed_headers' => ['*'],
 
-    'exposed_headers' => [],
+    'exposed_headers' => ['jwt'],
 
-    'max_age' => 0,
+    'max_age' => 600,
 
     'supports_credentials' => false,
 
