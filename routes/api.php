@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/register', [RegisterController::class, 'store']);
 Route::post('/login', [LoginController::class, 'store']);
 Route::post('/forgotPassword', [PasswordController::class, 'forgot']);
-Route::get('/reset-password/{token}', [PasswordController::class, 'reset'])->name('password.reset');
+Route::post('/resetPassword', [PasswordController::class, 'reset'])->name('password.reset');
 
 
 // PROTECTED ROUTES 

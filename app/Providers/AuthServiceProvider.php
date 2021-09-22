@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Exception;
 use Firebase\JWT\JWT;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,6 +64,10 @@ class AuthServiceProvider extends ServiceProvider
 
 
             return null;
+        });
+
+        ResetPassword::createUrlUsing(function ($user, string $token) {
+            return env('CLIENT_URL') . '/resetPassword?token=' . $token . '&email=' . $user->email;
         });
     }
 }
