@@ -67,6 +67,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/logout', [LogoutController::class, 'store']);
     Route::post('/changePassword', [PasswordController::class, 'change']);
+    Route::get('/account', [AccountController::class, 'getAccount']);
     Route::patch('/editAccount', [AccountController::class, 'update']);
     Route::delete('/deleteAccount', [AccountController::class, 'destroy']);
 });
