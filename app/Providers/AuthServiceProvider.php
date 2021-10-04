@@ -42,7 +42,7 @@ class AuthServiceProvider extends ServiceProvider
 
             // Decode the token 
             try {
-                $secret = env('JWT_SECRET');
+                $secret = config('auth.jwt_secret');
                 $token = JWT::decode($jwt, $secret, array('HS256'));
             } catch (Exception $e) {
                 return null;

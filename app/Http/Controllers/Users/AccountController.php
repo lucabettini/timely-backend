@@ -48,7 +48,7 @@ class AccountController extends Controller
         // Get token
         $jwt = $request->header('jwt');
 
-        $secret = env('JWT_SECRET');
+        $secret = config('auth.jwt_secret');
         $token = JWT::decode($jwt, $secret, array('HS256'));
 
 

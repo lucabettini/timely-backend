@@ -13,7 +13,7 @@ class TokenService
 
     public function __construct()
     {
-        $this->secret = env('JWT_SECRET');
+        $this->secret = config('auth.jwt_secret');
     }
 
     private function getDate()
