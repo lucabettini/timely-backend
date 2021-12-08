@@ -1,4 +1,4 @@
-![calendarecycle homepage image](https://lucabettini.com/images/timely_2.jpg)
+![calendarecycle homepage image](https://lucabettini.com/images/timely_1.jpg)
 
 # [TIMELY](https://timely.lucabettini.com)
 
