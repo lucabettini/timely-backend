@@ -18,6 +18,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'timezone'
     ];
 
     // Attributes hidden in JSON serialization

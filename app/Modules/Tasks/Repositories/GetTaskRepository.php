@@ -24,28 +24,28 @@ class GetTaskRepository
 
     public function getOverdue(User $user)
     {
-        return $user->tasks()->active()->overdue()->get();
+        return $user->tasks()->active()->overdue($user->timezone)->get();
     }
 
     public function getToday(User $user)
     {
         return $user->tasks()
-            ->whereDate('scheduled_for', Carbon::today())
+            ->whereDate('scheduled_for', Carbon::today($user->timezone))
             ->get();
     }
 
     public function getTomorrow(User $user)
     {
         return $user->tasks()
-            ->whereDate('scheduled_for', Carbon::tomorrow())
+            ->whereDate('scheduled_for', Carbon::tomorrow($user->timezone))
             ->get();
     }
 
     public function getWeek(User $user)
     {
         return $user->tasks()
-            ->whereDate('scheduled_for', '>=', Carbon::today())
-            ->whereDate('scheduled_for', '<=', Carbon::today()->addDays(7))
+            ->whereDate('scheduled_for', '>=', Carbon::today($user->timezone))
+            ->whereDate('scheduled_for', '<=', Carbon::today($user->timezone)->addDays(7))
             ->oldest('scheduled_for')
             ->get();
     }

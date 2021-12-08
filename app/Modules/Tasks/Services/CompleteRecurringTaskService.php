@@ -67,7 +67,7 @@ class CompleteRecurringTaskService
         // create a new task with the right date and set the FK. 
         if (
             is_null($recurring_task->end_date) or
-            $recurring_task->end_date->getTimestamp() > Carbon::today()->getTimestamp()
+            $recurring_task->end_date->getTimestamp() > Carbon::today($user->timezone)->getTimestamp()
         ) {
             $new_date = $this->create_date($recurring_task->frequency, $task->scheduled_for, $recurring_task->interval);
             $values = [

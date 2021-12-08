@@ -79,9 +79,9 @@ class Task extends Model
         return $query->where('tracked', true);
     }
 
-    public function scopeOverdue($query)
+    public function scopeOverdue($query, $timezone)
     {
-        return $query->active()->whereDate('scheduled_for', '<', Carbon::today());
+        return $query->active()->whereDate('scheduled_for', '<', Carbon::today($timezone));
     }
 
     //---------------//
