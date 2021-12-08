@@ -1,4 +1,8 @@
+![calendarecycle homepage image](https://lucabettini.com/images/timely_2.jpg)
+
 # [TIMELY](https://timely.lucabettini.com)
+
+<i>Completed and deployed on Heroku on September 23, 2021 - new deploy on DigitalOcean droplet on October 4, 2021</i>
 
 You are viewing the server side code. Client side repo is available [here](https://github.com/lucabettini/timely-client).
 
