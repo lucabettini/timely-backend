@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [env('CLIENT_URL')],
+    'allowed_origins' => ['timely.lucabettini.com', 'www.timely.lucabettini.com'],
 
     'allowed_origins_patterns' => [],
 
