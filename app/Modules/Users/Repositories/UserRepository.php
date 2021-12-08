@@ -14,12 +14,13 @@ class UserRepository
         return User::where('email', $email)->first();
     }
 
-    public function createUser($name, $email, $hashed_password)
+    public function createUser($name, $email, $hashed_password, $timezone)
     {
         User::create([
             'name' => $name,
             'email' => $email,
             'password' => $hashed_password,
+            'timezone' => $timezone
         ]);
     }
 

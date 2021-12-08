@@ -21,7 +21,8 @@ class RegisterController extends Controller
         $jwt = $this->service->create(
             $request->name,
             $request->email,
-            $request->password
+            $request->password,
+            $request->timezone
         );
 
         // Return response 

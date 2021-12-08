@@ -17,12 +17,13 @@ class CreateUserService
         $this->service = $token_service;
     }
 
-    public function create($name, $email, $password)
+    public function create($name, $email, $password, $timezone)
     {
         $this->repository->createUser(
             $name,
             $email,
             Hash::make($password),
+            $timezone
         );
 
         return $this->service->create($email);
